@@ -27,7 +27,7 @@ function App() {
                 Experienced Android developer with 13+ years in software development, 
                 specializing in modern Android development with Kotlin, Jetpack Compose, 
                 and cutting-edge mobile technologies. Passionate about creating innovative 
-                mobile solutions that make a difference.
+                solutions that push the boundaries of mobile development.
               </p>
             </div>
           </div>
