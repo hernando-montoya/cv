@@ -20,7 +20,7 @@ const EducationSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {education.map((item, index) => (
+          {(content?.education || []).map((item, index) => (
             <Card 
               key={item.id} 
               className={`card-hover hover-lift bg-gradient-to-br ${
