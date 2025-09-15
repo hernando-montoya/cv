@@ -131,6 +131,18 @@ const Header = ({ onToggleAdmin }) => {
                   {t(item)}
                 </button>
               ))}
+              
+              {/* Admin button for mobile */}
+              <button
+                onClick={() => {
+                  onToggleAdmin();
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center w-full text-left py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                Content Manager
+              </button>
             </nav>
           </div>
         )}
