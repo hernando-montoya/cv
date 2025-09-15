@@ -313,26 +313,6 @@ const AdminPanel = ({ isVisible, onToggle }) => {
                   </div>
                 </CardContent>
               </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>About Description</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {['en', 'es', 'fr'].map((lang) => (
-                    <div key={lang}>
-                      <label className="block text-sm font-medium mb-2">
-                        {lang === 'en' ? 'English' : lang === 'es' ? 'Spanish' : 'French'}
-                      </label>
-                      <Textarea
-                        value={content?.aboutDescription?.[lang] || ''}
-                        onChange={(e) => updateAboutDescription(lang, e.target.value)}
-                        rows={3}
-                      />
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
             </TabsContent>
 
             <TabsContent value="experience" className="space-y-6">
