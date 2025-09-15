@@ -6,6 +6,7 @@ import { useLanguage } from './LanguageProvider';
 
 const HeroSection = () => {
   const { t } = useLanguage();
+  const { content } = useContent();
 
   const scrollToContact = () => {
     const element = document.getElementById('contact');
