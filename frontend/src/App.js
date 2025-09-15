@@ -10,10 +10,31 @@ import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
+import AuthModal from './components/AuthModal';
 import { Toaster } from './components/ui/sonner';
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleAdminToggle = () => {
+    if (isAuthenticated) {
+      setShowAdmin(!showAdmin);
+    } else {
+      setShowAuth(true);
+    }
+  };
+
+  const handleAuthenticated = () => {
+    setIsAuthenticated(true);
+    setShowAuth(false);
+    setShowAdmin(true);
+  };
+
+  const handleCloseAuth = () => {
+    setShowAuth(false);
+  };
 
   return (
     <LanguageProvider>
