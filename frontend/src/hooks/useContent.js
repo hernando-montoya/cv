@@ -90,6 +90,41 @@ const fallbackData = {
       institution: "Antonio Leiva",
       year: "2017",
       type: "certification"
+    },
+    {
+      id: "2",
+      title: "Angular JS",
+      institution: "SFEIR School",
+      year: "2014",
+      type: "certification"
+    },
+    {
+      id: "3",
+      title: "Développement WPF",
+      institution: "Microsoft Paris",
+      year: "2011",
+      type: "certification"
+    },
+    {
+      id: "4",
+      title: "ASP.NET Academy",
+      institution: "Formations SQLI, Paris",
+      year: "2008",
+      type: "certification"
+    },
+    {
+      id: "5",
+      title: "M2 Technologies d'Internet pour les organisations",
+      institution: "Paris Dauphine",
+      year: "2007",
+      type: "degree"
+    },
+    {
+      id: "6",
+      title: "Ingénieur de Systèmes",
+      institution: "Université de Cundinamarca, Colombie",
+      year: "2004",
+      type: "degree"
     }
   ],
   skills: {
