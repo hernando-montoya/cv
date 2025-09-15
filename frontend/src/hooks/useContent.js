@@ -48,6 +48,39 @@ const fallbackData = {
           "Surveillé différentes versions"
         ]
       }
+    },
+    {
+      id: "2",
+      title: "Développeur Android",
+      company: "Betclic Group",
+      location: "Bordeaux",
+      period: "2017 – 2022",
+      description: {
+        en: [
+          "Developed the Betclic Sport application for French and Portuguese regulation",
+          "Created new functionalities and migrated Java to Kotlin",
+          "Integrated platforms like AppsFlyer, Emarsys, Google Places, Firebase ML, and CameraX",
+          "Corrected bugs and improved performance",
+          "Created unit and UI tests",
+          "Deployed the app to the Play Store and via FTP"
+        ],
+        es: [
+          "Desarrollé la aplicación Betclic Sport para la regulación francesa y portuguesa",
+          "Creé nuevas funcionalidades y migré de Java a Kotlin",
+          "Integré plataformas como AppsFlyer, Emarsys, Google Places, Firebase ML y CameraX",
+          "Corregí errores y mejoré el rendimiento",
+          "Creé pruebas unitarias y de UI",
+          "Desplegué la aplicación en Play Store y vía FTP"
+        ],
+        fr: [
+          "Développé l'application Betclic Sport pour la réglementation française et portugaise",
+          "Créé de nouvelles fonctionnalités et migré de Java vers Kotlin",
+          "Intégré des plateformes comme AppsFlyer, Emarsys, Google Places, Firebase ML et CameraX",
+          "Corrigé des bugs et amélioré les performances",
+          "Créé des tests unitaires et UI",
+          "Déployé l'application sur le Play Store et via FTP"
+        ]
+      }
     }
   ],
   education: [
