@@ -7,6 +7,7 @@ import { useLanguage } from './LanguageProvider';
 
 const SkillsSection = () => {
   const { t } = useLanguage();
+  const { content } = useContent();
 
   const skillCategories = [
     {
