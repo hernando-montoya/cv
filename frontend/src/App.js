@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { LanguageProvider } from './components/LanguageProvider';
 import Header from './components/Header';
@@ -9,9 +9,12 @@ import EducationSection from './components/EducationSection';
 import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import AdminPanel from './components/AdminPanel';
 import { Toaster } from './components/ui/sonner';
 
 function App() {
+  const [showAdmin, setShowAdmin] = useState(false);
+
   return (
     <LanguageProvider>
       <div className="App">
@@ -23,6 +26,10 @@ function App() {
         <SkillsSection />
         <ContactSection />
         <Footer />
+        <AdminPanel 
+          isVisible={showAdmin} 
+          onToggle={() => setShowAdmin(!showAdmin)} 
+        />
         <Toaster />
       </div>
     </LanguageProvider>
