@@ -56,22 +56,22 @@ const ContactSection = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: personalInfo.email,
-      href: `mailto:${personalInfo.email}`,
+      value: content?.personalInfo?.email,
+      href: `mailto:${content?.personalInfo?.email}`,
       color: 'text-blue-600 bg-blue-100'
     },
     {
       icon: Phone,
       label: 'Phone',
-      value: personalInfo.phone,
-      href: `tel:${personalInfo.phone}`,
+      value: content?.personalInfo?.phone,
+      href: `tel:${content?.personalInfo?.phone}`,
       color: 'text-green-600 bg-green-100'
     },
     {
       icon: Globe,
       label: 'Website',
-      value: personalInfo.website,
-      href: `https://${personalInfo.website}`,
+      value: content?.personalInfo?.website,
+      href: `https://${content?.personalInfo?.website}`,
       color: 'text-purple-600 bg-purple-100'
     }
   ];
