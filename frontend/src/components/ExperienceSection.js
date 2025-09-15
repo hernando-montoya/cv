@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Calendar, MapPin, Building } from 'lucide-react';
-import { experiences } from '../data/mockData';
+import { useContent } from '../hooks/useContent';
 import { useLanguage } from './LanguageProvider';
 
 const ExperienceSection = () => {
