@@ -20,7 +20,7 @@ COPY . .
 ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 
 # Build the application
-RUN yarn build
+RUN yarn docker:build
 
 # Production stage
 FROM nginx:alpine
