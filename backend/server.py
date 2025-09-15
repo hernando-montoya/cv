@@ -54,7 +54,9 @@ async def get_status_checks():
 
 # Import and include content routes
 from routes.content import router as content_router
+from routes.auth import router as auth_router
 app.include_router(content_router)
+app.include_router(auth_router)
 
 # Include the router in the main app
 app.include_router(api_router)
