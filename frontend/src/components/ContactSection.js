@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Mail, Phone, Globe, Send, MapPin } from 'lucide-react';
-import { personalInfo } from '../data/mockData';
+import { useContent } from '../hooks/useContent';
 import { useLanguage } from './LanguageProvider';
 import { useToast } from '../hooks/use-toast';
 
