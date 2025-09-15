@@ -203,5 +203,6 @@ export const skills = {
 
 export const languages = [
   { name: "English", level: "B2", proficiency: 75 },
-  { name: "Spanish", level: "Native", proficiency: 100 }
+  { name: "Spanish", level: "Native", proficiency: 100 },
+  { name: "French", level: "Bilingual", proficiency: 95 }
 ];
