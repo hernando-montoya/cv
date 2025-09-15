@@ -1,0 +1,22 @@
+# Variables de Entorno para Portainer Stack
+# Copia estas variables en Portainer > Stacks > Environment variables
+
+# === BASE DE DATOS ===
+MONGO_ROOT_USER=admin
+MONGO_ROOT_PASSWORD=TuPasswordMongoDB123!
+DB_NAME=cv_database
+
+# === AUTENTICACIÓN ADMIN ===
+# ¡IMPORTANTE! Genera credenciales seguras con backend/generate_credentials.py
+ADMIN_USERNAME=tu_usuario_admin
+ADMIN_PASSWORD_HASH=tu_hash_seguro_generado_por_script
+JWT_SECRET=tu_jwt_secret_muy_largo_y_seguro_generado_por_script
+
+# === URLs DE LA APLICACIÓN ===
+# Cambia por tu dominio real
+BACKEND_URL=https://api.tudominio.com
+
+# === CONFIGURACIÓN ADICIONAL ===
+# Estas son opcionales, tienen valores por defecto
+# COMPOSE_PROJECT_NAME=cv-app
+# TZ=Europe/Madrid
