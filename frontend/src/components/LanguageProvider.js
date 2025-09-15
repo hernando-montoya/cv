@@ -148,7 +148,8 @@ const translations = {
     // Languages
     languageTitle: 'Langues',
     english: 'Anglais (B2)',
-    spanish: 'Espagnol (Bilingue)',
+    spanish: 'Espagnol (Natif)',
+    french: 'Français (Bilingue)',
     
     // Footer
     footerText: 'Construit avec React et Technologies Web Modernes'
