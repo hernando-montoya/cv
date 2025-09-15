@@ -15,7 +15,7 @@ const AboutSection = () => {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full mb-8"></div>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            {t('aboutDescription')}
+            {content?.aboutDescription?.[language] || t('aboutDescription')}
           </p>
         </div>
       </div>
