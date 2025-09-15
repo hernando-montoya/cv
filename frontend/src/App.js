@@ -18,7 +18,7 @@ function App() {
   return (
     <LanguageProvider>
       <div className="App">
-        <Header />
+        <Header onToggleAdmin={() => setShowAdmin(!showAdmin)} />
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
