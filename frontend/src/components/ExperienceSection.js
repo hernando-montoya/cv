@@ -30,7 +30,7 @@ const ExperienceSection = () => {
           <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full"></div>
 
           <div className="space-y-12">
-            {experiences.map((experience, index) => (
+            {(content?.experiences || []).map((experience, index) => (
               <div
                 key={experience.id}
                 className={`relative flex items-center ${
