@@ -1,8 +1,10 @@
 import React from 'react';
 import { useLanguage } from './LanguageProvider';
+import { useContent } from '../hooks/useContent';
 
 const AboutSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { content } = useContent();
 
   return (
     <section id="about" className="section-padding bg-white">
