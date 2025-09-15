@@ -19,7 +19,7 @@ const translations = {
     
     // About Section
     aboutTitle: 'About Me',
-    aboutDescription: 'Experienced Android developer with 13+ years in software development, specializing in modern Android development with Kotlin, Jetpack Compose, and cutting-edge mobile technologies.',
+    aboutDescription: 'Experienced Android developer with 13+ years in software development, specializing in modern Android development with Kotlin, Jetpack Compose, and cutting-edge mobile technologies. Passionate about creating innovative solutions that push the boundaries of mobile development.',
     
     // Experience Section
     experienceTitle: 'Professional Experience',
