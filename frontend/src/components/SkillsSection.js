@@ -13,7 +13,7 @@ const SkillsSection = () => {
     {
       title: t('languages'),
       icon: Code,
-      skills: skills.languages,
+      skills: content?.skills?.languages || [],
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
       iconColor: 'text-blue-600'
@@ -21,7 +21,7 @@ const SkillsSection = () => {
     {
       title: t('android'),
       icon: Smartphone,
-      skills: skills.android,
+      skills: content?.skills?.android || [],
       color: 'from-cyan-500 to-cyan-600',
       bgColor: 'bg-cyan-50',
       iconColor: 'text-cyan-600'
@@ -29,7 +29,7 @@ const SkillsSection = () => {
     {
       title: t('tools'),
       icon: Wrench,
-      skills: skills.tools,
+      skills: content?.skills?.tools || [],
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
       iconColor: 'text-indigo-600'
@@ -37,7 +37,7 @@ const SkillsSection = () => {
     {
       title: t('methodologies'),
       icon: Target,
-      skills: skills.methodologies,
+      skills: content?.skills?.methodologies || [],
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
       iconColor: 'text-purple-600'
