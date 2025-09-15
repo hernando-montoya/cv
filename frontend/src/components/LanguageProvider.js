@@ -47,6 +47,7 @@ const translations = {
     languageTitle: 'Languages',
     english: 'English (B2)',
     spanish: 'Spanish (Native)',
+    french: 'French (Bilingual)',
     
     // Footer
     footerText: 'Built with React & Modern Web Technologies'
