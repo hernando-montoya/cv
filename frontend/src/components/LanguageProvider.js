@@ -69,7 +69,7 @@ const translations = {
     
     // About Section
     aboutTitle: 'Acerca de Mí',
-    aboutDescription: 'Desarrollador Android experimentado con más de 13 años en desarrollo de software, especializado en desarrollo Android moderno con Kotlin, Jetpack Compose y tecnologías móviles de vanguardia.',
+    aboutDescription: 'Desarrollador Android experimentado con más de 13 años en desarrollo de software, especializado en desarrollo Android moderno con Kotlin, Jetpack Compose y tecnologías móviles de vanguardia. Apasionado por crear soluciones innovadoras que expanden los límites del desarrollo móvil.',
     
     // Experience Section
     experienceTitle: 'Experiencia Profesional',
