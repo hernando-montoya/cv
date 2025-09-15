@@ -39,7 +39,7 @@ function App() {
   return (
     <LanguageProvider>
       <div className="App">
-        <Header onToggleAdmin={() => setShowAdmin(!showAdmin)} />
+        <Header onToggleAdmin={handleAdminToggle} />
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
@@ -47,6 +47,11 @@ function App() {
         <SkillsSection />
         <ContactSection />
         <Footer />
+        <AuthModal 
+          isVisible={showAuth}
+          onAuthenticated={handleAuthenticated}
+          onClose={handleCloseAuth}
+        />
         <AdminPanel 
           isVisible={showAdmin} 
           onToggle={() => setShowAdmin(!showAdmin)} 
