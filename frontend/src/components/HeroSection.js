@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from './ui/button';
 import { Mail, Globe, Phone, ArrowDown } from 'lucide-react';
-import { personalInfo } from '../data/mockData';
+import { useContent } from '../hooks/useContent';
 import { useLanguage } from './LanguageProvider';
 
 const HeroSection = () => {
