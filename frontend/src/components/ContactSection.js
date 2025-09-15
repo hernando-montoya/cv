@@ -11,6 +11,7 @@ import { useToast } from '../hooks/use-toast';
 const ContactSection = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const { content } = useContent();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
