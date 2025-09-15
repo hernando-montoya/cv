@@ -197,7 +197,7 @@ const AdminPanel = ({ isVisible, onToggle }) => {
     return (
       <Button
         onClick={onToggle}
-        className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg"
+        className="fixed bottom-4 right-4 z-[60] bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg"
         size="sm"
       >
         <Settings className="w-5 h-5" />
