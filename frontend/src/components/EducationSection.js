@@ -7,6 +7,7 @@ import { useLanguage } from './LanguageProvider';
 
 const EducationSection = () => {
   const { t } = useLanguage();
+  const { content } = useContent();
 
   return (
     <section id="education" className="section-padding bg-white">
