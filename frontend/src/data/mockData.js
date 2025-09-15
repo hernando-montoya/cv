@@ -4,7 +4,7 @@ export const personalInfo = {
   phone: "06.23.70.58.66",
   email: "h.montoya2004@gmail.com",
   website: "hernandomontoya.net",
-  profileImage: "https://images.unsplash.com/photo-1752170080627-0324ede1ddf2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzU3OTIzMTE5fDA&ixlib=rb-4.1.0&q=85"
+  profileImage: "https://customer-assets.emergentagent.com/job_responsive-vita/artifacts/x21fq5wh_profil.png"
 };
 
 export const experiences = [
