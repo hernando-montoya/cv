@@ -47,15 +47,15 @@ const HeroSection = () => {
             <div className="flex flex-wrap gap-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2 hover:text-blue-600 transition-colors cursor-pointer">
                 <Mail className="w-4 h-4" />
-                <span>{personalInfo.email}</span>
+                <span>{content?.personalInfo?.email}</span>
               </div>
               <div className="flex items-center space-x-2 hover:text-blue-600 transition-colors cursor-pointer">
                 <Phone className="w-4 h-4" />
-                <span>{personalInfo.phone}</span>
+                <span>{content?.personalInfo?.phone}</span>
               </div>
               <div className="flex items-center space-x-2 hover:text-blue-600 transition-colors cursor-pointer">
                 <Globe className="w-4 h-4" />
-                <span>{personalInfo.website}</span>
+                <span>{content?.personalInfo?.website}</span>
               </div>
             </div>
 
