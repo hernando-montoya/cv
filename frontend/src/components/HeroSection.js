@@ -82,8 +82,8 @@ const HeroSection = () => {
               {/* Profile Image */}
               <div className="relative z-10 w-80 h-80 sm:w-96 sm:h-96 lg:w-[420px] lg:h-[420px] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
                 <img
-                  src={personalInfo.profileImage}
-                  alt="Hernando Montoya"
+                  src={content?.personalInfo?.profileImage}
+                  alt={content?.personalInfo?.name}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
