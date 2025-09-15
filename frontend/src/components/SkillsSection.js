@@ -27,7 +27,7 @@ const SkillsSection = () => {
     },
     {
       title: t('tools'),
-      icon: Tool,
+      icon: Wrench,
       skills: skills.tools,
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
