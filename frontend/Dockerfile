@@ -1,6 +1,9 @@
 # Frontend Dockerfile - Multi-stage build
 FROM node:18-alpine AS builder
 
+# Build arguments
+ARG REACT_APP_BACKEND_URL=http://localhost:8001
+
 # Set working directory
 WORKDIR /app
 
@@ -12,6 +15,9 @@ RUN yarn install --frozen-lockfile --production=false
 
 # Copy source code
 COPY . .
+
+# Set environment variables for build
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 
 # Build the application
 RUN yarn build
