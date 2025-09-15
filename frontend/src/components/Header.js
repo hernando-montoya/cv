@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
-import { Download, Menu, X, Globe } from 'lucide-react';
+import { Download, Menu, X, Globe, Settings } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
 } from './ui/dropdown-menu';
 import { useLanguage } from './LanguageProvider';
 
-const Header = () => {
+const Header = ({ onToggleAdmin }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
