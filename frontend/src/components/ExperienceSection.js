@@ -7,6 +7,7 @@ import { useLanguage } from './LanguageProvider';
 
 const ExperienceSection = () => {
   const { language, t } = useLanguage();
+  const { content } = useContent();
 
   const getPeriod = (experience) => {
     if (language === 'es' && experience.period_es) return experience.period_es;
