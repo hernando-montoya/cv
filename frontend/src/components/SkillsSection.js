@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { Code, Smartphone, Tool, Target, Globe, BarChart } from 'lucide-react';
+import { Code, Smartphone, Wrench, Target, Globe, BarChart } from 'lucide-react';
 import { skills, languages } from '../data/mockData';
 import { useLanguage } from './LanguageProvider';
 
