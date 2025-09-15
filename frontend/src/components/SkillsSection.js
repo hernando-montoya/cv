@@ -99,7 +99,7 @@ const SkillsSection = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {languages.map((lang, index) => (
+            {(content?.languages || []).map((lang, index) => (
               <Card 
                 key={lang.name}
                 className={`card-hover hover-lift bg-white shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up`}
