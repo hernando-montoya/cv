@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Code, Smartphone, Wrench, Target, Globe, BarChart } from 'lucide-react';
-import { skills, languages } from '../data/mockData';
+import { useContent } from '../hooks/useContent';
 import { useLanguage } from './LanguageProvider';
 
 const SkillsSection = () => {
