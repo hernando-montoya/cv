@@ -72,10 +72,8 @@ services:
       - backend
     command: >
       sh -c "
-        echo '⏳ Esperando servicios (30s)...' &&
-        sleep 30 &&
-        echo '🔌 Conectando a MongoDB...' &&
-        python -c 'from motor.motor_asyncio import AsyncIOMotorClient; import asyncio; import os; asyncio.run(AsyncIOMotorClient(os.environ[\"MONGO_URL\"]).admin.command(\"ping\"))' &&
+        echo '⏳ Esperando servicios (45 segundos)...' &&
+        sleep 45 &&
         echo '📝 Inicializando datos del CV...' &&
         python init_data.py &&
         echo '✅ ¡CV App lista! Frontend: http://TU_IP_SERVIDOR:8006'
