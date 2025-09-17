@@ -19,15 +19,36 @@ const ConnectionDiagnostic = () => {
 
   const gatherEnvInfo = () => {
     try {
+      // Obtener URLs de forma segura
+      let viteEnv = undefined;
+      let processEnv = undefined;
+      
+      try {
+        if (typeof import !== 'undefined' && import.meta && import.meta.env) {
+          viteEnv = import.meta.env.REACT_APP_BACKEND_URL;
+        }
+      } catch (e) {
+        console.log('import.meta.env not available');
+      }
+      
+      try {
+        if (typeof process !== 'undefined' && process.env) {
+          processEnv = process.env.REACT_APP_BACKEND_URL;
+        }
+      } catch (e) {
+        console.log('process.env not available');
+      }
+
       const info = {
-        // Intentar múltiples formas de obtener la URL del backend
-        vite_env: (typeof import !== 'undefined' && import.meta && import.meta.env) ? import.meta.env.REACT_APP_BACKEND_URL : undefined,
-        process_env: (typeof process !== 'undefined' && process.env) ? process.env.REACT_APP_BACKEND_URL : undefined,
+        vite_env: viteEnv,
+        process_env: processEnv,
         window_location: window.location.origin,
         expected_docker: 'http://backend:8001',
         expected_external: window.location.origin.replace(':8006', ':8007').replace(':3000', ':8007')
       };
+      
       setEnvInfo(info);
+      console.log('Environment info gathered:', info);
     } catch (err) {
       console.error('Error gathering env info:', err);
       setEnvInfo({
