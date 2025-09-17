@@ -82,6 +82,9 @@ const ImportData = () => {
 
     try {
       const token = localStorage.getItem('token');
+      console.log('📤 Importing file to:', `${backendUrl}/api/import/cv-data`);
+      console.log('🔑 Token available:', !!token);
+      
       const response = await fetch(`${backendUrl}/api/import/cv-data`, {
         method: 'POST',
         headers: {
@@ -90,7 +93,9 @@ const ImportData = () => {
         body: formData
       });
 
+      console.log('📥 Import response status:', response.status);
       const data = await response.json();
+      console.log('📥 Import response data:', data);
       
       if (response.ok) {
         setImportStatus({
@@ -99,16 +104,18 @@ const ImportData = () => {
           details: data.records_count
         });
         checkCvStatus(); // Refresh status
+        testConnection(); // Test connection again
       } else {
         setImportStatus({
           success: false,
-          message: data.detail || 'Error durante la importación'
+          message: data.detail || `Error HTTP ${response.status}: ${data.message || 'Error durante la importación'}`
         });
       }
     } catch (error) {
+      console.error('❌ Import error:', error);
       setImportStatus({
         success: false,
-        message: 'Error de conexión durante la importación'
+        message: `Error de conexión: ${error.message}. Verifica que el backend esté accesible en ${backendUrl}`
       });
     } finally {
       setLoading(false);
@@ -119,6 +126,9 @@ const ImportData = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
+      console.log('🚀 Quick init to:', `${backendUrl}/api/import/quick-init`);
+      console.log('🔑 Token available:', !!token);
+      
       const response = await fetch(`${backendUrl}/api/import/quick-init`, {
         method: 'POST',
         headers: {
@@ -127,7 +137,9 @@ const ImportData = () => {
         }
       });
 
+      console.log('📥 Quick init response status:', response.status);
       const data = await response.json();
+      console.log('📥 Quick init response data:', data);
       
       if (response.ok) {
         setImportStatus({
@@ -136,16 +148,18 @@ const ImportData = () => {
           details: data.records_count
         });
         checkCvStatus(); // Refresh status
+        testConnection(); // Test connection again
       } else {
         setImportStatus({
           success: false,
-          message: data.detail || 'Error durante la inicialización'
+          message: data.detail || `Error HTTP ${response.status}: ${data.message || 'Error durante la inicialización'}`
         });
       }
     } catch (error) {
+      console.error('❌ Quick init error:', error);
       setImportStatus({
         success: false,
-        message: 'Error de conexión durante la inicialización'
+        message: `Error de conexión: ${error.message}. Verifica que el backend esté accesible en ${backendUrl}`
       });
     } finally {
       setLoading(false);
@@ -153,19 +167,27 @@ const ImportData = () => {
   };
 
   const handleExport = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem('token');
+      console.log('📤 Exporting from:', `${backendUrl}/api/import/export`);
+      console.log('🔑 Token available:', !!token);
+      
       const response = await fetch(`${backendUrl}/api/import/export`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       });
 
+      console.log('📥 Export response status:', response.status);
       const data = await response.json();
+      console.log('📥 Export response data:', data);
       
       if (response.ok) {
         // Download JSON file
-        const blob = new Blob([JSON.stringify(data.data, null, 2)], {
+        const jsonString = JSON.stringify(data.data, null, 2);
+        const blob = new Blob([jsonString], {
           type: 'application/json'
         });
         const url = URL.createObjectURL(blob);
@@ -179,19 +201,22 @@ const ImportData = () => {
         
         setImportStatus({
           success: true,
-          message: 'Datos exportados correctamente'
+          message: `Datos exportados correctamente (${Object.keys(data.data).length} secciones)`
         });
       } else {
         setImportStatus({
           success: false,
-          message: data.detail || 'Error durante la exportación'
+          message: data.detail || `Error HTTP ${response.status}: ${data.message || 'Error durante la exportación'}`
         });
       }
     } catch (error) {
+      console.error('❌ Export error:', error);
       setImportStatus({
         success: false,
-        message: 'Error de conexión durante la exportación'
+        message: `Error de conexión: ${error.message}. Verifica que el backend esté accesible en ${backendUrl}`
       });
+    } finally {
+      setLoading(false);
     }
   };
 
