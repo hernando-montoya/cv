@@ -236,7 +236,7 @@ const AdminPanel = ({ isVisible, onToggle }) => {
 
         <div className="overflow-y-auto max-h-[calc(90vh-100px)]">
           <Tabs defaultValue="personal" className="p-6">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="personal" className="flex items-center">
                 <User className="w-4 h-4 mr-2" />
                 Personal
@@ -260,6 +260,10 @@ const AdminPanel = ({ isVisible, onToggle }) => {
               <TabsTrigger value="languages" className="flex items-center">
                 <Globe className="w-4 h-4 mr-2" />
                 Languages
+              </TabsTrigger>
+              <TabsTrigger value="import" className="flex items-center">
+                <Database className="w-4 h-4 mr-2" />
+                Import
               </TabsTrigger>
             </TabsList>
 
