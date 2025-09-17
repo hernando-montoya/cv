@@ -22,6 +22,11 @@ db = client[os.environ['DB_NAME']]
 # Create the main app without a prefix
 app = FastAPI()
 
+# Health check endpoint (sin prefijo para Docker health check)
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "message": "Backend is running"}
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
