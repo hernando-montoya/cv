@@ -548,6 +548,10 @@ const AdminPanel = ({ isVisible, onToggle }) => {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="import" className="space-y-6">
+              <ImportData />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
