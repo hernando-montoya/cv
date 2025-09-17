@@ -5,22 +5,37 @@ const ConnectionDiagnostic = () => {
   const [diagnostics, setDiagnostics] = useState([]);
   const [testing, setTesting] = useState(false);
   const [envInfo, setEnvInfo] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    gatherEnvInfo();
-    runDiagnostics();
+    try {
+      gatherEnvInfo();
+      setTimeout(() => runDiagnostics(), 100);
+    } catch (err) {
+      setError(err.message);
+      console.error('Error in ConnectionDiagnostic:', err);
+    }
   }, []);
 
   const gatherEnvInfo = () => {
-    const info = {
-      // Intentar múltiples formas de obtener la URL del backend
-      vite_env: import.meta.env.REACT_APP_BACKEND_URL,
-      process_env: process.env.REACT_APP_BACKEND_URL,
-      window_location: window.location.origin,
-      expected_docker: 'http://backend:8001',
-      expected_external: window.location.origin.replace(':8006', ':8007').replace(':3000', ':8007')
-    };
-    setEnvInfo(info);
+    try {
+      const info = {
+        // Intentar múltiples formas de obtener la URL del backend
+        vite_env: (typeof import !== 'undefined' && import.meta && import.meta.env) ? import.meta.env.REACT_APP_BACKEND_URL : undefined,
+        process_env: (typeof process !== 'undefined' && process.env) ? process.env.REACT_APP_BACKEND_URL : undefined,
+        window_location: window.location.origin,
+        expected_docker: 'http://backend:8001',
+        expected_external: window.location.origin.replace(':8006', ':8007').replace(':3000', ':8007')
+      };
+      setEnvInfo(info);
+    } catch (err) {
+      console.error('Error gathering env info:', err);
+      setEnvInfo({
+        window_location: window.location.origin,
+        expected_external: window.location.origin.replace(':8006', ':8007').replace(':3000', ':8007'),
+        error: err.message
+      });
+    }
   };
 
   const testUrl = async (url, name) => {
