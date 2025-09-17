@@ -1,25 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, Download, Database, AlertCircle, CheckCircle, Trash2 } from 'lucide-react';
+import { Upload, Download, Database, AlertCircle, CheckCircle, Trash2, RefreshCw } from 'lucide-react';
 
 const ImportData = () => {
   const [importStatus, setImportStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [cvStatus, setCvStatus] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState('checking');
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8007';
+  // Usar import.meta.env en lugar de process.env para Vite
+  const backendUrl = import.meta.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:8007';
 
   useEffect(() => {
     checkCvStatus();
+    testConnection();
   }, []);
+
+  const testConnection = async () => {
+    setConnectionStatus('checking');
+    try {
+      console.log('🔗 Testing connection to:', backendUrl);
+      const response = await fetch(`${backendUrl}/health`, { 
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setConnectionStatus('connected');
+        console.log('✅ Backend connection OK');
+      } else {
+        setConnectionStatus('error');
+        console.log('❌ Backend responded with error:', response.status);
+      }
+    } catch (error) {
+      setConnectionStatus('error');
+      console.error('❌ Backend connection failed:', error);
+    }
+  };
 
   const checkCvStatus = async () => {
     try {
+      console.log('📊 Checking CV status at:', `${backendUrl}/api/import/status`);
       const response = await fetch(`${backendUrl}/api/import/status`);
       const data = await response.json();
       setCvStatus(data);
+      console.log('📊 CV Status:', data);
     } catch (error) {
       console.error('Error checking CV status:', error);
+      setCvStatus({ initialized: false, error: error.message });
     }
   };
 
