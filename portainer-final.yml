@@ -28,7 +28,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.portainer
+      dockerfile: Dockerfile.no-healthcheck
     container_name: cv_backend
     restart: unless-stopped
     environment:
