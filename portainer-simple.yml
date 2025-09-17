@@ -60,11 +60,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.portainer
       args:
-        REACT_APP_BACKEND_URL: http://localhost:8007
+        REACT_APP_BACKEND_URL: http://backend:8001
     container_name: cv_frontend
     restart: unless-stopped
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:8007
+      REACT_APP_BACKEND_URL: http://backend:8001
     ports:
       - "8006:3000"
     networks:
