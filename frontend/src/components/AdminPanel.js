@@ -18,11 +18,13 @@ import {
   Settings,
   Eye,
   EyeOff,
-  Database
+  Database,
+  Wifi
 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { useLanguage } from './LanguageProvider';
 import ImportData from './ImportData';
+import ConnectionDiagnostic from './ConnectionDiagnostic';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
