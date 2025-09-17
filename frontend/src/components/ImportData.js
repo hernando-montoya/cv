@@ -389,26 +389,35 @@ const ImportData = () => {
         </div>
 
         {/* Export and Clear */}
-        {cvStatus?.initialized && (
-          <div className="flex space-x-3">
+        <div className="space-y-4">
+          <h3 className="font-medium text-gray-900">Gestión de Datos</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <button
               onClick={handleExport}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
+              disabled={loading || !cvStatus?.initialized}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               <Download className="h-4 w-4 mr-2" />
-              Exportar Datos
+              {loading ? 'Exportando...' : 'Exportar Datos'}
             </button>
             
             <button
               onClick={handleClearData}
-              disabled={loading}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center"
+              disabled={loading || !cvStatus?.initialized}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               <Trash2 className="h-4 w-4 mr-2" />
-              Borrar Todos los Datos
+              {loading ? 'Borrando...' : 'Borrar Todos los Datos'}
             </button>
           </div>
-        )}
+          
+          {!cvStatus?.initialized && (
+            <p className="text-sm text-gray-500">
+              * Las funciones de exportar y borrar requieren que haya datos inicializados
+            </p>
+          )}
+        </div>
 
         {/* Status Messages */}
         {importStatus && (
