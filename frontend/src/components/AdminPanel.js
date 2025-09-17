@@ -557,7 +557,7 @@ const AdminPanel = ({ isVisible, onToggle }) => {
             </TabsContent>
 
             <TabsContent value="import" className="space-y-6">
-              <ImportData />
+              <SimpleImport />
             </TabsContent>
 
             <TabsContent value="diagnostic" className="space-y-6">
