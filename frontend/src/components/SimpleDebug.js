@@ -21,8 +21,9 @@ const SimpleDebug = () => {
     // URLs a probar
     const urlsToTest = [
       { name: 'Variable de entorno', url: url },
-      { name: 'Puerto 8007', url: 'http://localhost:8007' },
-      { name: 'Puerto 8001', url: 'http://localhost:8001' }
+      { name: 'Puerto 8007 (externo)', url: window.location.origin.replace(':8006', ':8007').replace(':3000', ':8007') },
+      { name: 'Backend Docker interno', url: 'http://backend:8001' },
+      { name: 'Localhost:8007', url: 'http://localhost:8007' }
     ];
 
     for (const test of urlsToTest) {
