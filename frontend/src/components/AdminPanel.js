@@ -560,7 +560,7 @@ const AdminPanel = ({ isVisible, onToggle }) => {
             </TabsContent>
 
             <TabsContent value="diagnostic" className="space-y-6">
-              <ConnectionDiagnostic />
+              <SimpleDebug />
             </TabsContent>
           </Tabs>
         </div>
