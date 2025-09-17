@@ -261,6 +261,48 @@ const ImportData = () => {
 
   return (
     <div className="space-y-6">
+      {/* Connection Status */}
+      <div className={`p-4 rounded-lg border ${
+        connectionStatus === 'connected' 
+          ? 'bg-green-50 border-green-200' 
+          : connectionStatus === 'error'
+          ? 'bg-red-50 border-red-200'
+          : 'bg-yellow-50 border-yellow-200'
+      }`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            {connectionStatus === 'connected' ? (
+              <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+            ) : connectionStatus === 'error' ? (
+              <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
+            ) : (
+              <RefreshCw className="h-5 w-5 text-yellow-600 mr-2 animate-spin" />
+            )}
+            <div>
+              <p className={`font-medium ${
+                connectionStatus === 'connected' ? 'text-green-800' : 
+                connectionStatus === 'error' ? 'text-red-800' : 'text-yellow-800'
+              }`}>
+                {connectionStatus === 'connected' ? 'Backend Conectado' : 
+                 connectionStatus === 'error' ? 'Error de Conexión' : 'Verificando Conexión...'}
+              </p>
+              <p className={`text-sm ${
+                connectionStatus === 'connected' ? 'text-green-600' : 
+                connectionStatus === 'error' ? 'text-red-600' : 'text-yellow-600'
+              }`}>
+                URL: {backendUrl}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={testConnection}
+            className="text-sm px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
+          >
+            Probar Conexión
+          </button>
+        </div>
+      </div>
+
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
           <Database className="h-5 w-5 mr-2 text-blue-600" />
