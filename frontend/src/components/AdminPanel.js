@@ -15,21 +15,13 @@ import {
   GraduationCap, 
   Code, 
   Globe,
-  Settings,
   Eye,
   EyeOff,
-  Database,
-  Wifi
+  Database
 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { useLanguage } from './LanguageProvider';
-import ImportData from './ImportData';
 import SimpleImport from './SimpleImport';
-import SimpleDebug from './SimpleDebug';
-import CorsDebug from './CorsDebug';
-import ImportDebug from './ImportDebug';
-import SystemDebug from './SystemDebug';
-import NetworkDebug from './NetworkDebug';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
