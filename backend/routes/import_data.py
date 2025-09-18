@@ -31,6 +31,69 @@ def verify_jwt_token(credentials: HTTPAuthorizationCredentials = Depends(securit
     except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+@router.get("/debug")
+async def debug_import_system():
+    """Debug endpoint to test system components"""
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    debug_info = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "checks": {}
+    }
+    
+    # Test 1: Basic Python imports
+    try:
+        import json
+        import os
+        import jwt
+        debug_info["checks"]["imports"] = {"status": "ok", "message": "All imports successful"}
+    except Exception as e:
+        debug_info["checks"]["imports"] = {"status": "error", "message": str(e)}
+    
+    # Test 2: Environment variables
+    try:
+        mongo_url = os.environ.get('MONGO_URL')
+        jwt_secret = os.environ.get('JWT_SECRET')
+        admin_user = os.environ.get('ADMIN_USERNAME')
+        
+        debug_info["checks"]["environment"] = {
+            "status": "ok",
+            "mongo_url_exists": bool(mongo_url),
+            "jwt_secret_exists": bool(jwt_secret),
+            "admin_user": admin_user,
+            "mongo_url_prefix": mongo_url[:20] + "..." if mongo_url else None
+        }
+    except Exception as e:
+        debug_info["checks"]["environment"] = {"status": "error", "message": str(e)}
+    
+    # Test 3: Database connection
+    try:
+        # Simple ping to database
+        result = await db.admin.command('ping')
+        debug_info["checks"]["database"] = {"status": "ok", "ping_result": result}
+    except Exception as e:
+        debug_info["checks"]["database"] = {"status": "error", "message": str(e)}
+    
+    # Test 4: Collections access
+    try:
+        count = await db.content.count_documents({})
+        debug_info["checks"]["collections"] = {"status": "ok", "content_count": count}
+    except Exception as e:
+        debug_info["checks"]["collections"] = {"status": "error", "message": str(e)}
+    
+    return debug_info
+
+@router.post("/test-auth")
+async def test_auth_system(current_user: dict = Depends(verify_jwt_token)):
+    """Test JWT authentication system"""
+    return {
+        "status": "ok",
+        "message": "Authentication successful",
+        "user": current_user,
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
 @router.post("/cv-data")
 async def import_cv_data(
     file: UploadFile = File(...),
