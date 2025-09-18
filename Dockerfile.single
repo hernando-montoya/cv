@@ -1,15 +1,33 @@
-# Dockerfile para aplicación CV - Un solo contenedor
+# Dockerfile para aplicación CV - Un solo contenedor ROBUSTO
 # Frontend React + Backend FastAPI + JSON Storage
 
 FROM node:18-alpine AS frontend-build
 
 # Build del frontend
 WORKDIR /app/frontend
-COPY frontend/package.json frontend/yarn.lock ./
-RUN yarn install --frozen-lockfile
 
+# Copiar package.json primero
+COPY frontend/package.json ./
+
+# Copiar yarn.lock si existe, sino usar npm
+COPY frontend/yarn.loc[k] ./
+
+# Instalar dependencias (yarn si existe yarn.lock, sino npm)
+RUN if [ -f yarn.lock ]; then \
+        yarn install --frozen-lockfile; \
+    else \
+        npm install; \
+    fi
+
+# Copiar código fuente
 COPY frontend/ ./
-RUN yarn build
+
+# Build del frontend
+RUN if [ -f yarn.lock ]; then \
+        yarn build; \
+    else \
+        npm run build; \
+    fi
 
 # Imagen final con Python
 FROM python:3.11-slim
@@ -41,7 +59,7 @@ ENV ADMIN_USERNAME="admin"
 ENV ADMIN_PASSWORD_HASH="b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890"
 ENV JWT_SECRET="production_jwt_secret_change_this"
 
-# Exponer puerto 8000 (estándar FastAPI)
+# Exponer puerto 8000
 EXPOSE 8000
 
 # Health check
