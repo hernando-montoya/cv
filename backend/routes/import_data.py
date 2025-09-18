@@ -69,8 +69,9 @@ async def debug_import_system():
     
     # Test 3: Database connection
     try:
-        # Simple ping to database
-        result = await db.admin.command('ping')
+        # Simple ping to database - usar client en lugar de db
+        from server import client
+        result = await client.admin.command('ping')
         debug_info["checks"]["database"] = {"status": "ok", "ping_result": result}
     except Exception as e:
         debug_info["checks"]["database"] = {"status": "error", "message": str(e)}
