@@ -38,41 +38,60 @@ async def import_cv_data(
 ):
     """Import CV data from JSON file"""
     
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Starting import for file: {file.filename}")
+    logger.info(f"File content type: {file.content_type}")
+    logger.info(f"User: {current_user.get('username', 'unknown')}")
+    
     # Validate file type
     if not file.filename.endswith('.json'):
+        logger.error(f"Invalid file type: {file.filename}")
         raise HTTPException(status_code=400, detail="Only JSON files are allowed")
     
     try:
         # Read and parse JSON file
+        logger.info("Reading file contents...")
         contents = await file.read()
+        logger.info(f"File size: {len(contents)} bytes")
+        
+        logger.info("Parsing JSON...")
         cv_data = json.loads(contents.decode('utf-8'))
+        logger.info(f"JSON parsed successfully. Keys: {list(cv_data.keys())}")
         
         # Validate required fields
         required_fields = ["personalInfo", "experiences", "education", "skills", "languages", "aboutDescription"]
         missing_fields = [field for field in required_fields if field not in cv_data]
         
         if missing_fields:
+            logger.error(f"Missing required fields: {missing_fields}")
             raise HTTPException(
                 status_code=400, 
                 detail=f"Missing required fields: {', '.join(missing_fields)}"
             )
         
+        logger.info("Checking existing content in database...")
         # Check if data already exists
         existing_content = await db.content.find_one()
         
         if existing_content:
+            logger.info("Updating existing content...")
             # Update existing data
             result = await db.content.replace_one(
                 {"_id": existing_content["_id"]}, 
                 cv_data
             )
             action = "updated"
+            logger.info(f"Content updated. Matched: {result.matched_count}, Modified: {result.modified_count}")
         else:
+            logger.info("Inserting new content...")
             # Insert new data
             result = await db.content.insert_one(cv_data)
             action = "created"
+            logger.info(f"Content created with ID: {result.inserted_id}")
         
-        return {
+        response_data = {
             "success": True,
             "message": f"CV data {action} successfully",
             "filename": file.filename,
@@ -85,9 +104,15 @@ async def import_cv_data(
             }
         }
         
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid JSON format")
+        logger.info(f"Import successful: {response_data}")
+        return response_data
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON decode error: {e}")
+        raise HTTPException(status_code=400, detail=f"Invalid JSON format: {str(e)}")
     except Exception as e:
+        logger.error(f"Unexpected error during import: {e}")
+        logger.exception("Full traceback:")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
 
 @router.post("/quick-init")
