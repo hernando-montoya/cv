@@ -6,7 +6,7 @@ const SystemDebug = () => {
   const [authResult, setAuthResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://192.168.1.18:8007';
 
   const runSystemDebug = async () => {
     setLoading(true);
