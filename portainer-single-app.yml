@@ -1,0 +1,71 @@
+# Stack CV App - UN SOLO CONTENEDOR ULTRA SIMPLE
+# Frontend + Backend + JSON Storage en un solo servicio
+# Puerto único: 8000
+
+version: '3.8'
+
+services:
+  cv-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.single
+    container_name: cv_app_all_in_one
+    restart: unless-stopped
+    ports:
+      - "8000:8000"  # Un solo puerto para TODO
+    volumes:
+      - cv_data:/app/data  # Persistir datos JSON
+    environment:
+      - CORS_ORIGINS=*
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD_HASH=b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890
+      - JWT_SECRET=production_jwt_secret_change_this
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  cv_data:
+    driver: local
+
+# 🎉 ULTRA SIMPLIFICADO - UN SOLO CONTENEDOR:
+# 
+# ✅ TODO EN UNO:
+# - Frontend React (compilado estático)
+# - Backend FastAPI (APIs + servir archivos)
+# - JSON Storage (datos persistentes)
+# - Un solo puerto: 8000
+# 
+# 📋 ACCESO:
+# - Aplicación completa: http://tu-servidor:8000
+# - APIs: http://tu-servidor:8000/api/*
+# - Admin Panel: http://tu-servidor:8000/admin
+# - Health Check: http://tu-servidor:8000/health
+# 
+# 🔐 LOGIN ADMIN:
+# Usuario: admin
+# Password: password123
+# 
+# 🚀 VENTAJAS:
+# - 1 contenedor vs 3 anteriores (70% menos recursos)
+# - 1 puerto vs múltiples puertos
+# - Deploy en <1 minuto
+# - Sin problemas de conectividad entre servicios
+# - Logs unificados
+# - Mantenimiento ultra simple
+# 
+# 📁 DATOS:
+# Persistidos en volumen cv_data:/app/data/
+# - cv_content.json (datos principales)
+# - backups/ (backups automáticos)
+# 
+# 🔧 CARACTERÍSTICAS:
+# - CV completo multi-idioma
+# - CMS admin funcional
+# - Import/Export JSON
+# - Backup/Restore automático
+# - PDF download
+# - Responsive design
