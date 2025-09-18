@@ -187,20 +187,20 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: |
-      PROBLEM IDENTIFIED AND SOLUTION IMPLEMENTED:
+      PROBLEMA ACTUALIZADO - MONGODB CRASHEANDO:
       
-      Root Cause: MongoDB container in Portainer stack not exposing port 27017
+      Root Cause: MongoDB container se está crasheando/saliendo después de unos segundos
       
-      Solutions Applied:
-      1. Corrected portainer-back-to-basics.yml and created portainer-mongodb-fixed.yml
-      2. Fixed backend/.env with correct MONGO_URL and credentials  
-      3. Fixed frontend/.env with correct REACT_APP_BACKEND_URL
-      4. Created diagnostic scripts and documentation
+      Diagnóstico Creado:
+      1. Script debug_mongodb_server.sh para diagnóstico completo en servidor
+      2. Análisis de logs, eventos Docker, recursos del sistema
+      3. Identificación de causas comunes: permisos, memoria, volúmenes
       
-      AWAITING USER ACTION: Re-deploy stack in Portainer to apply port correction
+      Soluciones Implementadas:
+      1. portainer-mongodb-simple-fix.yml - Sin volúmenes persistentes para debugging
+      2. portainer-mongodb-crash-fixed.yml - Configuración robusta con recursos limitados
+      3. Documentación completa paso a paso
       
-      Files Ready for Testing After Re-deploy:
-      - Backend MongoDB connectivity 
-      - Frontend loading at port 8006
-      - Admin panel import/export functionality
-      - Complete CV application workflow
+      PENDIENTE: Usuario debe ejecutar diagnóstico y aplicar una de las soluciones
+      
+      Próximo Testing: Después de que MongoDB se estabilice, probar conectividad completa
