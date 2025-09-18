@@ -1,0 +1,106 @@
+{
+  "id": "ece76f8c-cc32-4242-9f42-07ba1d3f4539",
+  "personalInfo": {
+    "name": "Hernando Montoya Oliveros",
+    "title": "Android Research & Development Engineer",
+    "phone": "06.23.70.58.66",
+    "email": "h.montoya2004@gmail.com",
+    "website": "hernandomontoya.net",
+    "profileImage": "https://customer-assets.emergentagent.com/job_responsive-vita/artifacts/x21fq5wh_profil.png"
+  },
+  "experiences": [
+    {
+      "id": "dc1697ce-dc6a-4a84-9ca4-5089a80c65ca",
+      "title": "Android Research & Development Engineer",
+      "company": "ELTA System",
+      "location": "Ashdod, Israel",
+      "period": "2021 - Present",
+      "period_es": "2021 - Presente",
+      "period_fr": "2021 - Présent",
+      "description": {
+        "en": [
+          "Lead development of advanced Android applications for defense systems",
+          "Implement modern Android architecture patterns with MVVM and Clean Architecture",
+          "Integrate cutting-edge technologies including Jetpack Compose and Kotlin Coroutines",
+          "Collaborate with cross-functional teams to deliver high-quality mobile solutions"
+        ],
+        "es": [
+          "Lidero el desarrollo de aplicaciones Android avanzadas para sistemas de defensa",
+          "Implemento patrones de arquitectura Android modernos con MVVM y Clean Architecture",
+          "Integro tecnologías de vanguardia incluyendo Jetpack Compose y Kotlin Coroutines",
+          "Colaboro con equipos multifuncionales para entregar soluciones móviles de alta calidad"
+        ],
+        "fr": [
+          "Dirige le développement d'applications Android avancées pour les systèmes de défense",
+          "Implémente des modèles d'architecture Android modernes avec MVVM et Clean Architecture",
+          "Intègre des technologies de pointe incluant Jetpack Compose et Kotlin Coroutines",
+          "Collabore avec des équipes pluridisciplinaires pour livrer des solutions mobiles de haute qualité"
+        ]
+      }
+    }
+  ],
+  "education": [
+    {
+      "id": "22dc5c6f-9758-4e66-a1d9-7acfa87395e5",
+      "title": "Computer Science Engineering",
+      "institution": "Universidad Nacional de Colombia",
+      "year": "2005",
+      "type": "Bachelor's Degree"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "Kotlin",
+      "Java",
+      "Python",
+      "JavaScript"
+    ],
+    "android": [
+      "Gradle",
+      "Firebase",
+      "Dagger2",
+      "Dagger Hilt",
+      "RxJava",
+      "Coroutines",
+      "Jetpack Compose"
+    ],
+    "tools": [
+      "Android Studio",
+      "VS Code",
+      "Git",
+      "Bitrise",
+      "Docker",
+      "CI/CD"
+    ],
+    "methodologies": [
+      "MVVM",
+      "UML",
+      "Scrum",
+      "Clean Architecture",
+      "TDD"
+    ]
+  },
+  "languages": [
+    {
+      "name": "English",
+      "level": "B2",
+      "proficiency": 75
+    },
+    {
+      "name": "Spanish",
+      "level": "Native",
+      "proficiency": 100
+    },
+    {
+      "name": "French",
+      "level": "Bilingual",
+      "proficiency": 95
+    }
+  ],
+  "aboutDescription": {
+    "en": "Experienced Android developer with 13+ years in software development, specializing in modern Android development with Kotlin, Jetpack Compose, and cutting-edge mobile technologies. Passionate about creating innovative solutions that push the boundaries of mobile development.",
+    "es": "Desarrollador Android experimentado con más de 13 años en desarrollo de software, especializado en desarrollo Android moderno con Kotlin, Jetpack Compose y tecnologías móviles de vanguardia. Apasionado por crear soluciones innovadoras que expanden los límites del desarrollo móvil.",
+    "fr": "Développeur Android expérimenté avec plus de 13 ans en développement logiciel, spécialisé dans le développement Android moderne avec Kotlin, Jetpack Compose et les technologies mobiles de pointe. Passionné par la création de solutions innovantes qui repoussent les limites du développement mobile."
+  },
+  "updated_at": "2025-09-18T12:29:09.761020"
+}
