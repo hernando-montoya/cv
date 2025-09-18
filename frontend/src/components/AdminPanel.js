@@ -27,6 +27,7 @@ import ImportData from './ImportData';
 import SimpleImport from './SimpleImport';
 import SimpleDebug from './SimpleDebug';
 import CorsDebug from './CorsDebug';
+import ImportDebug from './ImportDebug';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
