@@ -10,8 +10,8 @@ const SimpleDebug = () => {
   useEffect(() => {
     // Obtener URL del backend - vacía para mismo origen
     const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
-    setBackendUrl(url);
-    testBackendConnection(url);
+    setBackendUrl(backendUrl);
+    testBackendConnection(backendUrl);
   }, []);
 
   const testBackendConnection = async (url) => {
