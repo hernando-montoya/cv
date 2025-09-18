@@ -551,26 +551,6 @@ const AdminPanel = ({ isVisible, onToggle }) => {
             <TabsContent value="import" className="space-y-6">
               <SimpleImport />
             </TabsContent>
-
-            <TabsContent value="diagnostic" className="space-y-6">
-              <SimpleDebug />
-            </TabsContent>
-
-            <TabsContent value="cors" className="space-y-6">
-              <CorsDebug />
-            </TabsContent>
-
-            <TabsContent value="importdebug" className="space-y-6">
-              <ImportDebug />
-            </TabsContent>
-
-            <TabsContent value="system" className="space-y-6">
-              <SystemDebug />
-            </TabsContent>
-
-            <TabsContent value="network" className="space-y-6">
-              <NetworkDebug />
-            </TabsContent>
           </Tabs>
         </div>
       </div>
