@@ -577,6 +577,10 @@ const AdminPanel = ({ isVisible, onToggle }) => {
             <TabsContent value="cors" className="space-y-6">
               <CorsDebug />
             </TabsContent>
+
+            <TabsContent value="importdebug" className="space-y-6">
+              <ImportDebug />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
