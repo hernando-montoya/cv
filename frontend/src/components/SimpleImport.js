@@ -8,8 +8,8 @@ const SimpleImport = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState('checking');
 
-  // URL del backend - vacía para usar mismo origen
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+  // URL del backend
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://192.168.1.18:8007';
 
   useEffect(() => {
     checkCvStatus();
