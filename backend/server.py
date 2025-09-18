@@ -27,7 +27,19 @@ app = FastAPI()
 # Health check endpoint (sin prefijo para Docker health check)
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "message": "Backend is running"}
+    try:
+        # Intentar ping a MongoDB, pero no fallar si no está disponible
+        await client.admin.command('ping')
+        mongo_status = "connected"
+    except:
+        mongo_status = "disconnected"
+    
+    return {
+        "status": "healthy", 
+        "message": "Backend is running",
+        "mongodb": mongo_status,
+        "timestamp": datetime.utcnow().isoformat()
+    }
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
