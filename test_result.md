@@ -101,3 +101,106 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  CV application with MongoDB hostname resolution issues. Frontend not loading and backend cannot connect to MongoDB. 
+  Problem identified: MongoDB container not exposing port 27017 correctly in Portainer stack configuration.
+  Solution implemented: Corrected stack files and configurations, requires user to re-deploy stack in Portainer.
+
+backend:
+  - task: "MongoDB Connection Setup"
+    implemented: true
+    working: false
+    file: "backend/.env, backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "MongoDB hostname resolution failing. Backend .env corrected with proper MONGO_URL, but requires Portainer stack re-deploy with port 27017 exposed."
+  
+  - task: "FastAPI Backend Service"
+    implemented: true
+    working: false
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Backend not accessible at port 8007. Requires Portainer stack re-deploy to start services."
+  
+  - task: "Import/Export Data System" 
+    implemented: true
+    working: false
+    file: "backend/routes/import_data.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Import/export endpoints implemented but not functional due to MongoDB connectivity issues."
+
+frontend:
+  - task: "React Frontend Service"
+    implemented: true
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Frontend not loading at port 8006. Frontend .env corrected with proper REACT_APP_BACKEND_URL but requires Portainer stack re-deploy."
+  
+  - task: "Admin Panel with Import Functionality"
+    implemented: true
+    working: false
+    file: "frontend/src/components/AdminPanel.js, frontend/src/components/SimpleImport.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Admin panel and import components implemented but not accessible due to frontend service not running."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "MongoDB Connection Setup"
+    - "React Frontend Service"
+    - "FastAPI Backend Service"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: |
+      PROBLEM IDENTIFIED AND SOLUTION IMPLEMENTED:
+      
+      Root Cause: MongoDB container in Portainer stack not exposing port 27017
+      
+      Solutions Applied:
+      1. Corrected portainer-back-to-basics.yml and created portainer-mongodb-fixed.yml
+      2. Fixed backend/.env with correct MONGO_URL and credentials  
+      3. Fixed frontend/.env with correct REACT_APP_BACKEND_URL
+      4. Created diagnostic scripts and documentation
+      
+      AWAITING USER ACTION: Re-deploy stack in Portainer to apply port correction
+      
+      Files Ready for Testing After Re-deploy:
+      - Backend MongoDB connectivity 
+      - Frontend loading at port 8006
+      - Admin panel import/export functionality
+      - Complete CV application workflow
