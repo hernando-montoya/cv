@@ -235,7 +235,7 @@ const AdminPanel = ({ isVisible, onToggle }) => {
 
         <div className="overflow-y-auto max-h-[calc(90vh-100px)]">
           <Tabs defaultValue="personal" className="p-6">
-            <TabsList className="grid w-full grid-cols-12">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="personal" className="flex items-center">
                 <User className="w-4 h-4 mr-2" />
                 Personal
@@ -263,26 +263,6 @@ const AdminPanel = ({ isVisible, onToggle }) => {
               <TabsTrigger value="import" className="flex items-center">
                 <Database className="w-4 h-4 mr-2" />
                 Import
-              </TabsTrigger>
-              <TabsTrigger value="diagnostic" className="flex items-center">
-                <Wifi className="w-4 h-4 mr-2" />
-                Debug
-              </TabsTrigger>
-              <TabsTrigger value="cors" className="flex items-center">
-                <Settings className="w-4 h-4 mr-2" />
-                CORS
-              </TabsTrigger>
-              <TabsTrigger value="importdebug" className="flex items-center">
-                <Database className="w-4 h-4 mr-2" />
-                JSON
-              </TabsTrigger>
-              <TabsTrigger value="system" className="flex items-center">
-                <Settings className="w-4 h-4 mr-2" />
-                System
-              </TabsTrigger>
-              <TabsTrigger value="network" className="flex items-center">
-                <Wifi className="w-4 h-4 mr-2" />
-                Network
               </TabsTrigger>
             </TabsList>
 
