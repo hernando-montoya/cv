@@ -8,8 +8,8 @@ const SimpleDebug = () => {
   const [testing, setTesting] = useState(false);
 
   useEffect(() => {
-    // Obtener URL del backend de forma simple
-    const url = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8007';
+    // Obtener URL del backend - vacía para mismo origen
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
     setBackendUrl(url);
     testBackendConnection(url);
   }, []);
