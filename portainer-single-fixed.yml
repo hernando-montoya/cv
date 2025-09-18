@@ -1,0 +1,65 @@
+# Stack CV App - Un Solo Contenedor (Corregido)
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: cv_mongodb
+    hostname: mongodb  # 👈 Asegurar hostname correcto
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: securepassword123
+      MONGO_INITDB_DATABASE: cv_database
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - cv_network
+    # Healthcheck para MongoDB
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Aplicación combinada (Frontend + Backend)
+  cv-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.combined
+    container_name: cv_app
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://admin:securepassword123@mongodb:27017/cv_database?authSource=admin
+      DB_NAME: cv_database
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD_HASH: b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890
+      JWT_SECRET: production_jwt_secret_change_this
+      CORS_ORIGINS: "*"
+    ports:
+      - "8006:8001"
+    networks:
+      - cv_network
+    depends_on:
+      mongodb:
+        condition: service_healthy  # 👈 Esperar a que MongoDB esté saludable
+    # Script de inicio que espera MongoDB
+    command: >
+      sh -c "
+        echo '⏳ Esperando MongoDB...' &&
+        sleep 30 &&
+        echo '🚀 Iniciando aplicación...' &&
+        uvicorn server:app --host 0.0.0.0 --port 8001
+      "
+
+networks:
+  cv_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
