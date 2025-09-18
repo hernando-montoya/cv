@@ -1,0 +1,81 @@
+# Stack CV App - Solución Simple para MongoDB Crasheando
+# Configuración mínima sin volúmenes persistentes (para debugging)
+
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: cv_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: securepassword123  
+      MONGO_INITDB_DATABASE: cv_database
+    ports:
+      - "27017:27017"
+    networks:
+      - cv_network
+    # SIN VOLÚMENES PERSISTENTES PARA EVITAR PROBLEMAS DE PERMISOS
+    # Los datos se perderán al reiniciar, pero es solo para debugging
+    tmpfs:
+      - /data/db
+      - /data/configdb
+    command: mongod --auth --bind_ip_all --nojournal --quiet
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.no-healthcheck
+    container_name: cv_backend
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://admin:securepassword123@mongodb:27017/cv_database?authSource=admin
+      DB_NAME: cv_database
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD_HASH: b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890
+      JWT_SECRET: production_jwt_secret_change_this
+      CORS_ORIGINS: "*"
+    ports:
+      - "8007:8001"
+    networks:
+      - cv_network
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.portainer
+      args:
+        REACT_APP_BACKEND_URL: http://192.168.1.18:8007
+    container_name: cv_frontend
+    restart: unless-stopped
+    environment:
+      REACT_APP_BACKEND_URL: http://192.168.1.18:8007
+    ports:
+      - "8006:3000"
+    networks:
+      - cv_network
+    depends_on:
+      - backend
+
+networks:
+  cv_network:
+    driver: bridge
+
+# 🔧 CONFIGURACIÓN SIMPLIFICADA:
+# - Sin volúmenes persistentes (tmpfs en memoria)
+# - Sin health checks complejos
+# - Parámetros MongoDB optimizados para estabilidad
+# - Límites de memoria para evitar OOM kills
+# 
+# ⚠️ NOTA: Los datos se perderán al reiniciar el contenedor
+# Esta configuración es solo para verificar que MongoDB puede ejecutarse
+# Una vez estable, migrar a configuración con volúmenes persistentes
