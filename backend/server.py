@@ -85,6 +85,28 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Mount static files (frontend build)
+static_dir = Path("/app/frontend_build")
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir / "static")), name="static")
+    
+    # Serve frontend for all non-API routes
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Serve frontend for all routes that don't start with /api or /health"""
+        if full_path.startswith("api/") or full_path == "health":
+            # Let API routes handle themselves
+            return {"detail": "API endpoint"}
+        
+        # Serve index.html for all frontend routes
+        index_file = static_dir / "index.html"
+        if index_file.exists():
+            return FileResponse(str(index_file))
+        else:
+            return {"detail": "Frontend not built"}
+else:
+    logger.warning("Frontend build directory not found at /app/frontend_build")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
