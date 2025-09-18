@@ -568,6 +568,10 @@ const AdminPanel = ({ isVisible, onToggle }) => {
             <TabsContent value="diagnostic" className="space-y-6">
               <SimpleDebug />
             </TabsContent>
+
+            <TabsContent value="cors" className="space-y-6">
+              <CorsDebug />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
