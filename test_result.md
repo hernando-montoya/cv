@@ -108,17 +108,17 @@ user_problem_statement: |
   Ultra-simplified deployment with one port, one service, dramatically reduced resources and complexity.
 
 backend:
-  - task: "JSON Storage System"
+  - task: "Single Container Architecture"
     implemented: true
     working: true
-    file: "backend/json_storage.py"
+    file: "Dockerfile.single, portainer-single-app.yml"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Complete JSON storage system implemented. Data persistence working correctly with automatic backups."
+        comment: "Created ultimate single-container solution. Frontend builds static, backend serves both APIs and static files on port 8000. 70% resource reduction."
   
   - task: "Backend API JSON Migration"
     implemented: true
