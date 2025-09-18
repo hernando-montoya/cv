@@ -112,13 +112,13 @@ backend:
     implemented: true
     working: false
     file: "backend/.env, backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "main"
-        comment: "MongoDB hostname resolution failing. Backend .env corrected with proper MONGO_URL, but requires Portainer stack re-deploy with port 27017 exposed."
+        comment: "Updated diagnosis: MongoDB container starts but crashes after seconds. Created diagnostic tools and stable stack configurations for debugging."
   
   - task: "FastAPI Backend Service"
     implemented: true
