@@ -103,9 +103,10 @@
 #====================================================================================================
 
 user_problem_statement: |
-  CV application with MongoDB container crashing issue. MongoDB starts and exposes port 27017 initially, 
-  but after a few seconds the container disappears from 'docker ps', indicating container is crashing/exiting.
-  Problem requires diagnosis of MongoDB stability and container configuration issues.
+  Complete architecture refactoring: Eliminated MongoDB dependency and simplified to JSON file storage.
+  Removed debug tabs from Admin Panel, keeping only CV sections and Import functionality.
+  Created ultra-simple 2-container deployment (frontend + backend only).
+  All CV functionality maintained while dramatically simplifying deployment and maintenance.
 
 backend:
   - task: "MongoDB Connection Setup"
