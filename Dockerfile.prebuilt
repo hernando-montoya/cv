@@ -1,0 +1,41 @@
+# Dockerfile ULTRA SIMPLE - Frontend pre-compilado
+# Solución para evitar problemas de build con yarn/npm
+
+FROM python:3.11-slim
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear directorio de la aplicación
+WORKDIR /app
+
+# Copiar y instalar dependencias del backend
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar código del backend
+COPY backend/ ./
+
+# Copiar frontend ya compilado (debe existir en frontend/build)
+COPY frontend/build ./frontend_build
+
+# Crear directorio para datos JSON
+RUN mkdir -p /app/data && chmod 755 /app/data
+
+# Variables de entorno por defecto
+ENV CORS_ORIGINS="*"
+ENV ADMIN_USERNAME="admin"
+ENV ADMIN_PASSWORD_HASH="b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890"
+ENV JWT_SECRET="production_jwt_secret_change_this"
+
+# Exponer puerto 8000
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+# Comando para iniciar la aplicación
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
