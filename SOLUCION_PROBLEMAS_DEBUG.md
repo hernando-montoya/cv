@@ -77,7 +77,7 @@ const SimpleDebug = () => {
 ### **Archivo .env corregido:**
 ```bash
 # ANTES (problemático):
-REACT_APP_BACKEND_URL=https://profile-hub-38.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://docker-cv-bridge.preview.emergentagent.com
 
 # DESPUÉS (corregido):
 REACT_APP_BACKEND_URL=http://localhost:8007

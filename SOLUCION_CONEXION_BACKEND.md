@@ -6,7 +6,7 @@ El frontend no puede conectarse al backend, causando errores en importación e i
 ## 🎯 **Causa Principal:**
 La variable `REACT_APP_BACKEND_URL` en `/app/frontend/.env` apunta a una URL incorrecta:
 ```
-REACT_APP_BACKEND_URL=https://profile-hub-38.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://docker-cv-bridge.preview.emergentagent.com
 ```
 
 ## ✅ **Soluciones disponibles:**
