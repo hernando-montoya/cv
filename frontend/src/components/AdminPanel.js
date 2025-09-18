@@ -29,6 +29,7 @@ import SimpleDebug from './SimpleDebug';
 import CorsDebug from './CorsDebug';
 import ImportDebug from './ImportDebug';
 import SystemDebug from './SystemDebug';
+import NetworkDebug from './NetworkDebug';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
