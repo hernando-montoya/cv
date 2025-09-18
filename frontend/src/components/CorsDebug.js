@@ -5,8 +5,8 @@ const CorsDebug = () => {
   const [testResults, setTestResults] = useState([]);
   const [testing, setTesting] = useState(false);
 
-  // Obtener la URL del backend
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8007';
+  // Obtener la URL del backend - vacía para mismo origen
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
 
   const runCorsTests = async () => {
     setTesting(true);
