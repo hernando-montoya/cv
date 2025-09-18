@@ -8,7 +8,7 @@ services:
   cv-app:
     build:
       context: .
-      dockerfile: Dockerfile.single
+      dockerfile: Dockerfile.prebuilt
     container_name: cv_app_all_in_one
     restart: unless-stopped
     ports:
@@ -34,7 +34,7 @@ volumes:
 # 🎉 ULTRA SIMPLIFICADO - UN SOLO CONTENEDOR:
 # 
 # ✅ TODO EN UNO:
-# - Frontend React (compilado estático)
+# - Frontend React (pre-compilado)
 # - Backend FastAPI (APIs + servir archivos)
 # - JSON Storage (datos persistentes)
 # - Un solo puerto: 8000
@@ -50,22 +50,13 @@ volumes:
 # Password: password123
 # 
 # 🚀 VENTAJAS:
+# - Build más rápido (frontend pre-compilado)
+# - Sin dependencias Node.js en build
+# - Dockerfile ultra simple
+# - Deploy en <30 segundos
 # - 1 contenedor vs 3 anteriores (70% menos recursos)
-# - 1 puerto vs múltiples puertos
-# - Deploy en <1 minuto
-# - Sin problemas de conectividad entre servicios
-# - Logs unificados
-# - Mantenimiento ultra simple
 # 
 # 📁 DATOS:
 # Persistidos en volumen cv_data:/app/data/
 # - cv_content.json (datos principales)
 # - backups/ (backups automáticos)
-# 
-# 🔧 CARACTERÍSTICAS:
-# - CV completo multi-idioma
-# - CMS admin funcional
-# - Import/Export JSON
-# - Backup/Restore automático
-# - PDF download
-# - Responsive design
