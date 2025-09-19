@@ -44,18 +44,7 @@ api_router = APIRouter(prefix="/api")
 async def root():
     return {"message": "CV Backend API - JSON Storage", "version": "2.0"}
 
-# Import and include content routes
-from routes.content import router as content_router
-from routes.auth import router as auth_router
-from routes.import_data import router as import_data_router
-
-app.include_router(content_router)
-app.include_router(auth_router)
-app.include_router(import_data_router)
-
-# Include the router in the main app
-app.include_router(api_router)
-
+# Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -71,7 +60,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Mount static files (frontend build)
+# Import and include API routes FIRST
+from routes.content import router as content_router
+from routes.auth import router as auth_router
+from routes.import_data import router as import_data_router
+
+app.include_router(content_router)
+app.include_router(auth_router)
+app.include_router(import_data_router)
+
+# Include the api router
+app.include_router(api_router)
+
+# Mount static files and frontend routes LAST
 static_dir = Path("/app/frontend_build")
 if static_dir.exists():
     logger.info(f"Frontend build directory found at {static_dir}")
