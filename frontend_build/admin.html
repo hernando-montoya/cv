@@ -251,7 +251,8 @@
                     localStorage.setItem('adminToken', authToken);
                     
                     showAdminPanel();
-                    loadCVData();
+                    // Load CV data in background, don't block UI
+                    setTimeout(() => loadCVData(), 100);
                 } else {
                     const error = await response.json();
                     throw new Error(error.detail || 'Login failed');
