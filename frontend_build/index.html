@@ -345,6 +345,10 @@
             document.getElementById('website').textContent = cvData.personalInfo.website;
             document.getElementById('profileImage').src = cvData.personalInfo.profileImage;
 
+            // Personal description (multilingüe)
+            const personalDesc = cvData.personalDescription?.[currentLanguage] || cvData.personalDescription?.en || 'Experienced Android developer specializing in modern development with Kotlin and Jetpack Compose';
+            document.getElementById('heroDescription').textContent = personalDesc;
+
             const aboutText = cvData.aboutDescription[currentLanguage] || cvData.aboutDescription.en || cvData.aboutDescription.es || 'About description not available';
             document.getElementById('aboutText').textContent = aboutText;
 
