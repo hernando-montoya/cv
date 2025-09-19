@@ -114,11 +114,14 @@ backend:
     file: "Dockerfile.single, portainer-single-app.yml"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Created ultimate single-container solution. Frontend builds static, backend serves both APIs and static files on port 8000. 70% resource reduction."
+      - working: true
+        agent: "testing"
+        comment: "Backend API testing completed successfully. All core functionality working: health check, authentication, content API, import/export system, static file serving, CORS headers, and protected routes. Authentication issue fixed by correcting password hash in .env file."
   
   - task: "Backend API JSON Migration"
     implemented: true
@@ -131,30 +134,39 @@ backend:
       - working: true
         agent: "main"
         comment: "All backend APIs migrated from MongoDB to JSON storage. Health check confirms storage connectivity."
+      - working: true
+        agent: "testing"
+        comment: "JSON storage system fully functional. All CRUD operations working correctly. Import/export system operational with proper authentication."
   
   - task: "FastAPI Backend Service"
     implemented: true
-    working: false
+    working: true
     file: "backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
         comment: "Backend not accessible at port 8007. Requires Portainer stack re-deploy to start services."
+      - working: true
+        agent: "testing"
+        comment: "Backend service fully operational on internal port 8001. All API endpoints responding correctly. Fixed authentication by correcting password hash in backend/.env file. External routing working for /api/* endpoints."
   
   - task: "Import/Export Data System" 
     implemented: true
-    working: false
+    working: true
     file: "backend/routes/import_data.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
         comment: "Import/export endpoints implemented but not functional due to MongoDB connectivity issues."
+      - working: true
+        agent: "testing"
+        comment: "Import/export system fully functional with JSON storage. Successfully tested file upload, data import, export functionality, and backup/restore operations. Authentication properly protecting admin endpoints."
 
 frontend:
   - task: "React Frontend Service"
