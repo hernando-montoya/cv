@@ -12,9 +12,8 @@ services:
       - NODE_ENV=production
       - CORS_ORIGINS=*
       - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD_HASH=38e9c8ff64f9bff540a8d715970fa0fd:c3350383271174906b081329734760df3cff51f38564664c2e6782ef95cbd688
+      - ADMIN_PASSWORD_HASH=9eadfdc77f85614879a4957ccac7e679:8784f9085381abd4202181d927565dd152d0a4ada3b5ac117f89c3720460a70b
       - JWT_SECRET=production_jwt_secret_change_this
-      # DEBUG: Multiple passwords accepted - admin, 123, test, debug, admin2024
     volumes:
       - cv_data:/app/data
     restart: unless-stopped
