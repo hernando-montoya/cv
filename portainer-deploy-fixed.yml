@@ -12,7 +12,7 @@ services:
       - NODE_ENV=production
       - CORS_ORIGINS=*
       - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD_HASH=b8d6c1a9b2e5d7f3:a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890
+      - ADMIN_PASSWORD_HASH=38e9c8ff64f9bff540a8d715970fa0fd:c3350383271174906b081329734760df3cff51f38564664c2e6782ef95cbd688
       - JWT_SECRET=production_jwt_secret_change_this
     volumes:
       - cv_data:/app/data
