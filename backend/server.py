@@ -36,6 +36,11 @@ async def health_check():
         "timestamp": datetime.utcnow().isoformat()
     }
 
+# Test route
+@app.get("/test")
+async def test_route():
+    return {"message": "Test route works"}
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
