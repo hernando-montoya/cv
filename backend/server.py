@@ -92,6 +92,16 @@ if static_dir.exists():
         else:
             return {"detail": "Admin page not found"}
     
+    # Add debug admin route
+    @app.get("/admin-debug")
+    async def serve_admin_debug():
+        """Serve debug admin page"""
+        debug_file = Path("/app/admin_debug.html")
+        if debug_file.exists():
+            return FileResponse(str(debug_file))
+        else:
+            return {"detail": "Debug admin page not found"}
+    
     # Add root route
     @app.get("/")
     async def serve_index():
