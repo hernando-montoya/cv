@@ -10,6 +10,9 @@ COPY backend/requirements.txt ./
 RUN pip install -r requirements.txt
 COPY backend/ ./
 
+# Asegurar que auth_debug esté disponible
+RUN ls -la models/ && echo "Auth debug file:" && cat models/auth_debug.py | head -10
+
 # Frontend completo (HTML estático)
 COPY frontend_build/ ./frontend_build/
 
