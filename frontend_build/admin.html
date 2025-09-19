@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CV Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto py-8 px-4">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">CV Admin Panel</h1>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-4">🏠 Quick Access</h2>
+                    <div class="space-y-2">
+                        <a href="/" class="block text-blue-600 hover:text-blue-800">← Back to CV</a>
+                        <a href="/api/content/" class="block text-blue-600 hover:text-blue-800">📊 View Content API</a>
+                        <a href="/health" class="block text-blue-600 hover:text-blue-800">💓 Health Check</a>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-4">📊 API Endpoints</h2>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>GET</strong> /api/content/ - Get CV data</div>
+                        <div><strong>PUT</strong> /api/content/ - Update CV data</div>
+                        <div><strong>POST</strong> /api/import/cv-data - Import JSON</div>
+                        <div><strong>GET</strong> /api/import/export - Export JSON</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-yellow-800 mb-2">📝 Note</h3>
+                <p class="text-yellow-700">
+                    This is a basic admin interface. The full React admin panel with forms 
+                    is available through the API endpoints above. You can use tools like 
+                    Postman or curl to manage the CV content via the REST API.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
