@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CV Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .login-container { display: none; }
+        .admin-content { display: none; }
+        .login-container.active, .admin-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Login Form -->
+    <div id="loginContainer" class="login-container active min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full mx-4">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Panel de Control CV</h1>
+                    <p class="text-gray-600">Inicia sesión para gestionar el contenido</p>
+                </div>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="mb-6">
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Usuario</label>
+                        <input type="text" id="username" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="admin">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                        <input type="password" id="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="123">
+                    </div>
+                    
+                    <button type="submit" id="loginBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i data-lucide="lock" class="w-4 h-4 mr-2"></i>
+                        Iniciar Sesión
+                    </button>
+                </form>
+                
+                <div id="loginError" class="mt-4 text-red-600 text-sm text-center hidden"></div>
+                
+                <div class="mt-6 text-center">
+                    <a href="/" class="text-blue-600 hover:text-blue-700 text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i>
+                        Volver al CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div id="adminContent" class="admin-content">
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <h1 class="text-2xl font-bold text-gray-900">Panel de Control CV</h1>
+                    <div class="flex space-x-4">
+                        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                            Ver CV
+                        </a>
+                        <button onclick="saveAllChanges()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center" id="saveBtn">
+                            <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                            Guardar Todo
+                        </button>
+                        <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Navigation Tabs -->
+            <div class="mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 overflow-x-auto">
+                        <button onclick="showTab('info')" class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="user" class="w-4 h-4 mr-2 inline"></i>Información Personal
+                        </button>
+                        <button onclick="showTab('about')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="file-text" class="w-4 h-4 mr-2 inline"></i>Descripción
+                        </button>
+                        <button onclick="showTab('experience')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="briefcase" class="w-4 h-4 mr-2 inline"></i>Experiencia
+                        </button>
+                        <button onclick="showTab('tools')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="database" class="w-4 h-4 mr-2 inline"></i>Herramientas
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="text-center py-8" style="display: none;">
+                <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto text-blue-600 mb-4"></i>
+                <p class="text-gray-600">Cargando datos del CV...</p>
+            </div>
+
+            <!-- Personal Info Tab -->
+            <div id="info" class="tab-content active">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Información Personal</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                            <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Título Profesional</label>
+                            <input type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                            <input type="text" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Sitio Web</label>
+                            <input type="url" id="website" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Imagen de Perfil (URL)</label>
+                            <input type="url" id="photo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Descripción Profesional</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Inglés</label>
+                            <textarea id="about_en" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Professional description in English..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Español</label>
+                            <textarea id="about_es" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Descripción profesional en español..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Francés</label>
+                            <textarea id="about_fr" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Description professionnelle en français..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Tab -->
+            <div id="experience" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Experiencia Profesional</h2>
+                    <div id="experienceList" class="space-y-6">
+                        <div class="text-center text-gray-500 py-8">
+                            <i data-lucide="briefcase" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p>Los datos de experiencia se cargarán aquí</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div id="tools" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Herramientas de Gestión</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Import Section -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                                <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+                                Importar Datos
+                            </h3>
+                            <div class="mb-4">
+                                <input type="file" id="importFile" accept=".json" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <button onclick="importData()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                Importar
+                            </button>
+                        </div>
+                        
+                        <!-- Export Section -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                                <i data-lucide="download" class="w-5 h-5 mr-2"></i>
+                                Exportar Datos
+                            </h3>
+                            <p class="text-gray-600 mb-4">Descargar datos actuales como archivo JSON.</p>
+                            <button onclick="exportData()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                Exportar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-8 border-t pt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Acciones Rápidas</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="testApi()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center">
+                                <i data-lucide="activity" class="w-4 h-4 mr-2"></i>
+                                Probar API
+                            </button>
+                            <a href="/health" target="_blank" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
+                                <i data-lucide="heart" class="w-4 h-4 mr-2"></i>
+                                Estado Sistema
+                            </a>
+                            <button onclick="reloadData()" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center">
+                                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                                Recargar Datos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notifications" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <script>
+        let authToken = null;
+        let cvData = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin panel initializing...');
+            lucide.createIcons();
+            
+            // Check for existing token
+            authToken = localStorage.getItem('adminToken');
+            if (authToken) {
+                verifyToken();
+            }
+        });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            console.log('Login attempt...');
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('loginError');
+            
+            loginBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Iniciando...';
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    authToken = data.access_token;
+                    localStorage.setItem('adminToken', authToken);
+                    
+                    console.log('Login successful!');
+                    showAdminPanel();
+                    
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Login falló');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+            }
+
+            loginBtn.innerHTML = '<i data-lucide="lock" class="w-4 h-4 mr-2"></i>Iniciar Sesión';
+            loginBtn.disabled = false;
+            lucide.createIcons();
+        }
+
+        async function verifyToken() {
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showAdminPanel();
+                } else {
+                    throw new Error('Token verification failed');
+                }
+            } catch (error) {
+                console.error('Token verification failed:', error);
+                localStorage.removeItem('adminToken');
+                authToken = null;
+                showLoginForm();
+            }
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginContainer').classList.add('active');
+            document.getElementById('adminContent').classList.remove('active');
+        }
+
+        function showAdminPanel() {
+            console.log('Showing admin panel...');
+            document.getElementById('loginContainer').classList.remove('active');
+            document.getElementById('adminContent').classList.add('active');
+            
+            // Load data immediately
+            loadCVData();
+        }
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function loadCVData() {
+            console.log('Loading CV data...');
+            document.getElementById('loading').style.display = 'block';
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    headers: { 
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    cvData = await response.json();
+                    console.log('CV data loaded:', cvData);
+                    populateFields();
+                    showNotification('Datos cargados correctamente', 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error loading CV data:', error);
+                showNotification('Error cargando datos: ' + error.message, 'error');
+            }
+            
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function populateFields() {
+            if (!cvData) return;
+            
+            console.log('Populating form fields...');
+            
+            // Personal info
+            if (cvData.personalInfo) {
+                document.getElementById('name').value = cvData.personalInfo.name || '';
+                document.getElementById('title').value = cvData.personalInfo.title || '';
+                document.getElementById('email').value = cvData.personalInfo.email || '';
+                document.getElementById('phone').value = cvData.personalInfo.phone || '';
+                document.getElementById('website').value = cvData.personalInfo.website || '';
+                document.getElementById('photo').value = cvData.personalInfo.profileImage || '';
+            }
+
+            // About descriptions
+            if (cvData.aboutDescription) {
+                document.getElementById('about_en').value = cvData.aboutDescription.en || '';
+                document.getElementById('about_es').value = cvData.aboutDescription.es || '';
+                document.getElementById('about_fr').value = cvData.aboutDescription.fr || '';
+            }
+
+            // Experience
+            populateExperience();
+            
+            console.log('Fields populated successfully');
+        }
+
+        function populateExperience() {
+            const container = document.getElementById('experienceList');
+            if (!cvData.experiences || cvData.experiences.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i data-lucide="briefcase" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                        <p>No hay experiencias registradas</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = cvData.experiences.map((exp, index) => `
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">${exp.title || 'Sin título'}</h3>
+                            <p class="text-blue-600 font-medium">${exp.company || 'Sin empresa'}</p>
+                            <p class="text-gray-500 text-sm">${exp.location || ''} • ${exp.period || ''}</p>
+                        </div>
+                    </div>
+                    <div class="text-gray-700">
+                        ${(exp.description?.es || exp.description?.en || []).map(desc => 
+                            `<p class="mb-2">• ${desc}</p>`
+                        ).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        async function saveAllChanges() {
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Guardando...';
+            saveBtn.disabled = true;
+
+            try {
+                // Prepare data to save
+                const dataToSave = {
+                    personalInfo: {
+                        name: document.getElementById('name').value,
+                        title: document.getElementById('title').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        website: document.getElementById('website').value,
+                        profileImage: document.getElementById('photo').value
+                    },
+                    aboutDescription: {
+                        en: document.getElementById('about_en').value,
+                        es: document.getElementById('about_es').value,
+                        fr: document.getElementById('about_fr').value
+                    },
+                    // Keep existing data for other fields
+                    experiences: cvData?.experiences || [],
+                    education: cvData?.education || [],
+                    skills: cvData?.skills || {},
+                    languages: cvData?.languages || []
+                };
+
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(dataToSave)
+                });
+
+                if (response.ok) {
+                    showNotification('¡Cambios guardados correctamente!', 'success');
+                    cvData = dataToSave; // Update local data
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showNotification('Error guardando cambios: ' + error.message, 'error');
+            }
+
+            saveBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 mr-2"></i>Guardar Todo';
+            saveBtn.disabled = false;
+            lucide.createIcons();
+        }
+
+        async function testApi() {
+            try {
+                const response = await fetch('/api/content/', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (response.ok) {
+                    showNotification('✅ API funcionando correctamente', 'success');
+                } else {
+                    showNotification(`❌ Error API: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Error conexión: ${error.message}`, 'error');
+            }
+        }
+
+        function reloadData() {
+            loadCVData();
+        }
+
+        async function exportData() {
+            try {
+                const response = await fetch('/api/import/export', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (!response.ok) throw new Error('Export failed');
+                
+                const data = await response.json();
+                
+                const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cv-data-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showNotification('Datos exportados correctamente', 'success');
+            } catch (error) {
+                showNotification('Error exportando: ' + error.message, 'error');
+            }
+        }
+
+        async function importData() {
+            const fileInput = document.getElementById('importFile');
+            if (!fileInput.files[0]) {
+                showNotification('Por favor selecciona un archivo', 'error');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/api/import/cv-data', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showNotification('¡Datos importados correctamente!', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    throw new Error('Import failed');
+                }
+            } catch (error) {
+                showNotification('Error importando: ' + error.message, 'error');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            authToken = null;
+            showLoginForm();
+            document.getElementById('loginForm').reset();
+            showNotification('Sesión cerrada', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `p-4 rounded-lg shadow-lg mb-4 max-w-sm transition-all ${
+                type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
+                type === 'error' ? 'bg-red-100 text-red-800 border border-red-200' :
+                'bg-blue-100 text-blue-800 border border-blue-200'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i data-lucide="${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info'}" class="w-5 h-5 mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.getElementById('notifications').appendChild(notification);
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
