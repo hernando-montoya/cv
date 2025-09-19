@@ -310,9 +310,15 @@
 
         async function loadCVData() {
             try {
+                // Show loading message
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('personal').style.display = 'none';
+                
                 const response = await fetch('/api/content/', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    timeout: 10000 // 10 second timeout
                 });
+                
                 if (response.ok) {
                     cvData = await response.json();
                     populateAllForms();
@@ -320,10 +326,20 @@
                     document.getElementById('personal').classList.add('active');
                     document.getElementById('personal').style.display = 'block';
                 } else {
-                    throw new Error('Failed to load data');
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
                 }
             } catch (error) {
-                showNotification('Error loading data: ' + error.message, 'error');
+                console.error('Error loading CV data:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-red-600 mb-4">Error loading CV data: ${error.message}</p>
+                        <button onclick="loadCVData()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Retry
+                        </button>
+                    </div>
+                `;
+                // Still show the admin panel even if data loading fails
+                document.getElementById('personal').style.display = 'block';
             }
         }
 
