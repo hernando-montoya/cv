@@ -381,6 +381,35 @@
             `).join('');
             document.getElementById('skillsGrid').innerHTML = skillsHtml;
 
+            // Education
+            const educationHtml = cvData.education ? cvData.education.map(edu => `
+                <div class="glassmorphism rounded-2xl p-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">${edu.degree || 'Degree'}</h3>
+                            <p class="text-xl text-blue-600 font-semibold">${edu.institution || 'Institution'}</p>
+                            <p class="text-gray-600">${edu.period || 'Period'}</p>
+                        </div>
+                    </div>
+                    ${edu.description ? `<p class="text-gray-700 leading-relaxed">${edu.description}</p>` : ''}
+                </div>
+            `).join('') : '<div class="text-center text-gray-500">No education data available</div>';
+            document.getElementById('educationList').innerHTML = educationHtml;
+
+            // Languages
+            const languagesHtml = cvData.languages ? cvData.languages.map(lang => `
+                <div class="glassmorphism rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="globe" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">${lang.language || 'Language'}</h3>
+                    <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
+                        ${lang.level || 'Level'}
+                    </span>
+                </div>
+            `).join('') : '<div class="text-center text-gray-500">No languages data available</div>';
+            document.getElementById('languagesList').innerHTML = languagesHtml;
+
             lucide.createIcons();
         }
 
