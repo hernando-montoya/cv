@@ -279,7 +279,8 @@
 
                 if (response.ok) {
                     showAdminPanel();
-                    loadCVData();
+                    // Load CV data in background, don't block UI
+                    setTimeout(() => loadCVData(), 100);
                 } else {
                     throw new Error('Token verification failed');
                 }
