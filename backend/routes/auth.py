@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from models.auth import AdminCredentials, AuthToken, auth_manager
+from models.auth_debug import AdminCredentials, AuthToken, auth_manager
 from typing import Optional
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
