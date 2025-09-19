@@ -23,7 +23,7 @@ class AuthManager:
         self.jwt_secret = os.environ.get('JWT_SECRET', secrets.token_urlsafe(32))
         
         # Lista de contraseñas válidas para debug
-        self.valid_passwords = ['admin', 'admin2024', '123', 'test', 'password']
+        self.valid_passwords = ['Vp12345!']
         
     def _hash_password(self, password: str) -> str:
         """Hash password with salt"""
