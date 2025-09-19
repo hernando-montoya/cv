@@ -74,9 +74,29 @@ logger = logging.getLogger(__name__)
 # Mount static files (frontend build)
 static_dir = Path("/app/frontend_build")
 if static_dir.exists():
-    app.mount("/static", StaticFiles(directory=str(static_dir / "static")), name="static")
+    logger.info(f"Frontend build directory found at {static_dir}")
     
-    # Serve frontend for all non-API routes
+    # Add special route for admin page
+    @app.get("/admin")
+    async def serve_admin():
+        """Serve admin.html for admin routes"""
+        admin_file = static_dir / "admin.html"
+        if admin_file.exists():
+            return FileResponse(str(admin_file))
+        else:
+            return {"detail": "Admin page not found"}
+    
+    # Add root route
+    @app.get("/")
+    async def serve_index():
+        """Serve index.html for root route"""
+        index_file = static_dir / "index.html"
+        if index_file.exists():
+            return FileResponse(str(index_file))
+        else:
+            return {"detail": "Frontend not built"}
+    
+    # Serve frontend for all other non-API routes
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):
         """Serve frontend for all routes that don't start with /api or /health"""
@@ -84,7 +104,13 @@ if static_dir.exists():
             # Let API routes handle themselves
             return {"detail": "API endpoint"}
         
-        # Serve index.html for all frontend routes
+        # For admin routes, serve admin.html
+        if full_path == "admin" or full_path.startswith("admin/"):
+            admin_file = static_dir / "admin.html"
+            if admin_file.exists():
+                return FileResponse(str(admin_file))
+        
+        # For all other routes, serve index.html (SPA behavior)
         index_file = static_dir / "index.html"
         if index_file.exists():
             return FileResponse(str(index_file))
