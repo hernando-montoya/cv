@@ -17,6 +17,9 @@ async def login(credentials: AdminCredentials):
                 detail="Invalid credentials"
             )
         return token
+    except HTTPException:
+        # Re-raise HTTP exceptions as-is
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
