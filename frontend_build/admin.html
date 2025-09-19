@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin CV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .hidden { display: none !important; }
+        .show { display: block !important; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- LOGIN -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full mx-4 bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-2xl font-bold text-center mb-6">🔐 Panel Admin CV</h1>
+            
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
+                    <input type="text" id="username" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" value="admin">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" placeholder="Vp12345!">
+                </div>
+                
+                <button type="submit" id="loginBtn" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    🚀 Entrar al Panel
+                </button>
+            </form>
+            
+            <div id="loginError" class="mt-4 text-red-500 text-sm text-center hidden"></div>
+            
+            <div class="mt-4 text-center">
+                <a href="/" class="text-blue-500 hover:underline">← Volver al CV</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel" class="hidden">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold text-gray-900">📊 Panel de Control CV</h1>
+                    <div class="space-x-4">
+                        <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            👁️ Ver CV
+                        </a>
+                        <button onclick="logout()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            🚪 Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto py-6 px-4">
+            <!-- Tabs Navigation -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 overflow-x-auto">
+                        <button onclick="showTab('personal')" class="tab-btn border-b-2 border-blue-500 text-blue-600 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            👤 Personal
+                        </button>
+                        <button onclick="showTab('about')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            📝 Descripción
+                        </button>
+                        <button onclick="showTab('experience')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            💼 Experiencia
+                        </button>
+                        <button onclick="showTab('education')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            🎓 Educación
+                        </button>
+                        <button onclick="showTab('skills')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            🛠️ Habilidades
+                        </button>
+                        <button onclick="showTab('languages')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            🌍 Idiomas
+                        </button>
+                        <button onclick="showTab('tools')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium whitespace-nowrap">
+                            ⚙️ Herramientas
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Personal Info Tab -->
+            <div id="personal" class="tab-content">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">👤 Información Personal</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo:</label>
+                            <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Título Profesional:</label>
+                            <input type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+                            <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono:</label>
+                            <input type="text" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sitio Web:</label>
+                            <input type="url" id="website" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Foto (URL):</label>
+                            <input type="url" id="profileImage" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button onclick="savePersonal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            💾 Guardar Personal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">📝 Descripciones</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">🇺🇸 Inglés:</label>
+                            <textarea id="about_en" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Professional description in English..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">🇪🇸 Español:</label>
+                            <textarea id="about_es" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Descripción profesional en español..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">🇫🇷 Francés:</label>
+                            <textarea id="about_fr" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Description professionnelle en français..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button onclick="saveAbout()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            💾 Guardar Descripciones
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Tab -->
+            <div id="experience" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">💼 Experiencia Profesional</h2>
+                    <div id="experienceList" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <i data-lucide="briefcase" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p>Carga los datos para ver la experiencia profesional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Tab -->
+            <div id="education" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">🎓 Educación</h2>
+                    <div id="educationList" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <i data-lucide="graduation-cap" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p>Carga los datos para ver la educación</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="skills" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">🛠️ Habilidades Técnicas</h2>
+                    <div id="skillsList" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <i data-lucide="code" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p>Carga los datos para ver las habilidades</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages Tab -->
+            <div id="languages" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">🌍 Idiomas</h2>
+                    <div id="languagesList" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <i data-lucide="globe" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p>Carga los datos para ver los idiomas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div id="tools" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">⚙️ Herramientas de Gestión</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Data Management -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">📊 Gestión de Datos</h3>
+                            <div class="space-y-3">
+                                <button onclick="loadData()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    📥 Cargar Datos del API
+                                </button>
+                                <button onclick="testConnection()" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                                    🔗 Probar Conexión API
+                                </button>
+                                <a href="/api/content/" target="_blank" class="block w-full bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded text-center">
+                                    👁️ Ver Datos JSON
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Import/Export -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">📂 Import/Export</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Importar JSON:</label>
+                                    <input type="file" id="importFile" accept=".json" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                                </div>
+                                <button onclick="importJSON()" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                    📤 Importar Archivo
+                                </button>
+                                <button onclick="exportData()" class="w-full bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                                    📥 Exportar JSON
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-8 border-t pt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">⚡ Acciones Rápidas</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="saveAllData()" class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+                                💾 Guardar Todo
+                            </button>
+                            <a href="/health" target="_blank" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                                ❤️ Estado Sistema
+                            </a>
+                            <button onclick="clearAllData()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                🗑️ Limpiar Campos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Messages -->
+    <div id="messages" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <script>
+        let token = null;
+        let cvData = null;
+
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!username || !password) {
+                showError('Por favor llena todos los campos');
+                return;
+            }
+            
+            loginBtn.textContent = '🔄 Entrando...';
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    token = data.access_token;
+                    localStorage.setItem('adminToken', token);
+                    
+                    // Hide login, show panel
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    
+                    showMessage('🎉 ¡Bienvenido al Panel!', 'success');
+                    
+                    // Auto-load data
+                    setTimeout(() => loadData(), 1000);
+                    
+                } else {
+                    throw new Error('Credenciales incorrectas - Usa: Vp12345!');
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+            
+            loginBtn.textContent = '🚀 Entrar al Panel';
+            loginBtn.disabled = false;
+        });
+
+        // Show tab
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Set active button
+            event.target.classList.remove('border-transparent', 'text-gray-500');
+            event.target.classList.add('border-blue-500', 'text-blue-600');
+        }
+
+        // Load data from API
+        async function loadData() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    cvData = await response.json();
+                    populateAllFields();
+                    showMessage('📊 Datos cargados correctamente', 'success');
+                } else {
+                    throw new Error(`Error ${response.status}`);
+                }
+            } catch (error) {
+                showError('Error cargando datos: ' + error.message);
+            }
+        }
+
+        // Populate all form fields
+        function populateAllFields() {
+            if (!cvData) return;
+            
+            // Personal info
+            if (cvData.personalInfo) {
+                document.getElementById('name').value = cvData.personalInfo.name || '';
+                document.getElementById('title').value = cvData.personalInfo.title || '';
+                document.getElementById('email').value = cvData.personalInfo.email || '';
+                document.getElementById('phone').value = cvData.personalInfo.phone || '';
+                document.getElementById('website').value = cvData.personalInfo.website || '';
+                document.getElementById('profileImage').value = cvData.personalInfo.profileImage || '';
+            }
+
+            // About descriptions
+            if (cvData.aboutDescription) {
+                document.getElementById('about_en').value = cvData.aboutDescription.en || '';
+                document.getElementById('about_es').value = cvData.aboutDescription.es || '';
+                document.getElementById('about_fr').value = cvData.aboutDescription.fr || '';
+            }
+
+            // Experience
+            populateExperience();
+            
+            // Education
+            populateEducation();
+            
+            // Skills
+            populateSkills();
+            
+            // Languages
+            populateLanguages();
+        }
+
+        // Populate experience
+        function populateExperience() {
+            const container = document.getElementById('experienceList');
+            if (!cvData.experiences || cvData.experiences.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i data-lucide="briefcase" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                        <p>No hay experiencias registradas</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = cvData.experiences.map((exp, index) => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">${exp.title || 'Sin título'}</h3>
+                            <p class="text-blue-600 font-medium">${exp.company || 'Sin empresa'}</p>
+                            <p class="text-gray-500 text-sm">${exp.location || ''} • ${exp.period || ''}</p>
+                        </div>
+                    </div>
+                    <div class="text-gray-700 text-sm">
+                        ${(exp.description?.es || exp.description?.en || []).map(desc => 
+                            `<p class="mb-1">• ${desc}</p>`
+                        ).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        // Populate education
+        function populateEducation() {
+            const container = document.getElementById('educationList');
+            if (!cvData.education || cvData.education.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i data-lucide="graduation-cap" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                        <p>No hay educación registrada</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = cvData.education.map((edu, index) => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-lg font-semibold text-gray-900">${edu.degree || 'Sin título'}</h3>
+                    <p class="text-blue-600 font-medium">${edu.institution || 'Sin institución'}</p>
+                    <p class="text-gray-500 text-sm">${edu.period || ''}</p>
+                    ${edu.description ? `<p class="text-gray-700 text-sm mt-2">${edu.description}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Populate skills
+        function populateSkills() {
+            const container = document.getElementById('skillsList');
+            if (!cvData.skills || Object.keys(cvData.skills).length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i data-lucide="code" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                        <p>No hay habilidades registradas</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = Object.entries(cvData.skills).map(([category, skills]) => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 capitalize mb-2">${category}</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${skills.map(skill => 
+                            `<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">${skill}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Populate languages
+        function populateLanguages() {
+            const container = document.getElementById('languagesList');
+            if (!cvData.languages || cvData.languages.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i data-lucide="globe" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                        <p>No hay idiomas registrados</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            
+            container.innerHTML = cvData.languages.map((lang, index) => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">${lang.language || 'Sin idioma'}</h3>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">${lang.level || 'Sin nivel'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Import JSON file
+        async function importJSON() {
+            const fileInput = document.getElementById('importFile');
+            if (!fileInput.files[0]) {
+                showError('Por favor selecciona un archivo JSON');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            
+            try {
+                const text = await file.text();
+                const jsonData = JSON.parse(text);
+                
+                // Validate JSON structure
+                if (!jsonData.personalInfo && !jsonData.aboutDescription && !jsonData.experiences) {
+                    throw new Error('El archivo JSON no tiene la estructura correcta');
+                }
+                
+                // Upload to API
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(jsonData)
+                });
+
+                if (response.ok) {
+                    cvData = jsonData;
+                    populateAllFields();
+                    showMessage('📤 Archivo JSON importado correctamente', 'success');
+                    fileInput.value = ''; // Clear input
+                } else {
+                    throw new Error('Error subiendo datos al servidor');
+                }
+                
+            } catch (error) {
+                showError('Error importando JSON: ' + error.message);
+            }
+        }
+
+        // Export data as JSON
+        async function exportData() {
+            try {
+                const response = await fetch('/api/import/export', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Export failed');
+                
+                const data = await response.json();
+                
+                const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cv-data-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showMessage('📥 Datos exportados correctamente', 'success');
+            } catch (error) {
+                showError('Error exportando: ' + error.message);
+            }
+        }
+
+        // Test API connection
+        async function testConnection() {
+            try {
+                const response = await fetch('/api/content/');
+                if (response.ok) {
+                    showMessage('✅ API funcionando correctamente', 'success');
+                } else {
+                    showMessage(`❌ Error API: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Save personal info
+        async function savePersonal() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            const personalData = {
+                personalInfo: {
+                    name: document.getElementById('name').value,
+                    title: document.getElementById('title').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    website: document.getElementById('website').value,
+                    profileImage: document.getElementById('profileImage').value
+                }
+            };
+
+            try {
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(personalData)
+                });
+                
+                if (response.ok) {
+                    showMessage('👤 Información personal guardada', 'success');
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showError('Error guardando: ' + error.message);
+            }
+        }
+
+        // Save about info
+        async function saveAbout() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            const aboutData = {
+                aboutDescription: {
+                    en: document.getElementById('about_en').value,
+                    es: document.getElementById('about_es').value,
+                    fr: document.getElementById('about_fr').value
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(aboutData)
+                });
+                
+                if (response.ok) {
+                    showMessage('📝 Descripciones guardadas', 'success');
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showError('Error guardando: ' + error.message);
+            }
+        }
+
+        // Save all data
+        async function saveAllData() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+
+            const allData = {
+                personalInfo: {
+                    name: document.getElementById('name').value,
+                    title: document.getElementById('title').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    website: document.getElementById('website').value,
+                    profileImage: document.getElementById('profileImage').value
+                },
+                aboutDescription: {
+                    en: document.getElementById('about_en').value,
+                    es: document.getElementById('about_es').value,
+                    fr: document.getElementById('about_fr').value
+                },
+                // Keep existing data
+                experiences: cvData?.experiences || [],
+                education: cvData?.education || [],
+                skills: cvData?.skills || {},
+                languages: cvData?.languages || []
+            };
+
+            try {
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(allData)
+                });
+                
+                if (response.ok) {
+                    showMessage('💾 Todos los datos guardados', 'success');
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showError('Error guardando: ' + error.message);
+            }
+        }
+
+        // Clear fields
+        function clearAllData() {
+            if (confirm('¿Estás seguro de que quieres limpiar todos los campos?')) {
+                document.querySelectorAll('input, textarea').forEach(field => {
+                    if (field.id !== 'username' && field.id !== 'password') {
+                        field.value = '';
+                    }
+                });
+                showMessage('🗑️ Campos limpiados', 'info');
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('adminToken');
+            token = null;
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+            showMessage('🚪 Sesión cerrada', 'info');
+        }
+
+        // Show message
+        function showMessage(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `px-4 py-2 rounded-lg text-white shadow-lg ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            div.textContent = message;
+            
+            document.getElementById('messages').appendChild(div);
+            
+            setTimeout(() => {
+                div.remove();
+            }, 4000);
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        // Check for existing token on load
+        window.addEventListener('load', function() {
+            const savedToken = localStorage.getItem('adminToken');
+            if (savedToken) {
+                token = savedToken;
+            }
+        });
+    </script>
+</body>
+</html>
