@@ -409,6 +409,13 @@
                 document.getElementById('profileImage').value = cvData.personalInfo.profileImage || '';
             }
 
+            // Personal descriptions
+            if (cvData.personalDescription) {
+                document.getElementById('personal_desc_en').value = cvData.personalDescription.en || '';
+                document.getElementById('personal_desc_es').value = cvData.personalDescription.es || '';
+                document.getElementById('personal_desc_fr').value = cvData.personalDescription.fr || '';
+            }
+
             // About descriptions
             if (cvData.aboutDescription) {
                 document.getElementById('about_en').value = cvData.aboutDescription.en || '';
