@@ -33,7 +33,7 @@
   - ✅ Contenido dinámico
 
 - **Admin Panel**: http://tu-servidor:8001/admin
-  - ✅ Login: `admin` / `admin2024`  
+  - ✅ Login: `admin` / `admin`  
   - ✅ Gestión contenido completa
   - ✅ Import/Export funcional
 
