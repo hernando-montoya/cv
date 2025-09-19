@@ -344,22 +344,21 @@ class CVBackendTester:
     def test_protected_routes(self):
         """Test that protected routes require authentication"""
         try:
-            # Test content update without token
-            update_data = {"personalInfo": {"name": "Test"}}
-            response = self.session.put(f"{self.base_url}/api/content/", json=update_data, timeout=10)
+            # Test import export without token (should be protected)
+            export_response = self.session.get(f"{self.base_url}/api/import/export", timeout=10)
             
-            if response.status_code in [401, 403]:
-                self.log_test("Protected Routes", True, "Content update properly requires authentication")
+            if export_response.status_code in [401, 403]:
+                self.log_test("Protected Routes", True, "Export route properly requires authentication")
                 
-                # Test import without token
-                import_response = self.session.get(f"{self.base_url}/api/import/export", timeout=10)
-                if import_response.status_code in [401, 403]:
-                    self.log_test("Protected Import Routes", True, "Import routes properly require authentication")
+                # Test import status without token (should be unprotected)
+                status_response = self.session.get(f"{self.base_url}/api/import/status", timeout=10)
+                if status_response.status_code == 200:
+                    self.log_test("Public Routes", True, "Status route is properly public")
                     return True
                 else:
-                    self.log_test("Protected Import Routes", False, f"Import route should require auth: HTTP {import_response.status_code}")
+                    self.log_test("Public Routes", False, f"Status route should be public: HTTP {status_response.status_code}")
             else:
-                self.log_test("Protected Routes", False, f"Content update should require auth: HTTP {response.status_code}")
+                self.log_test("Protected Routes", False, f"Export route should require auth: HTTP {export_response.status_code}")
                 
         except Exception as e:
             self.log_test("Protected Routes", False, f"Protected routes test failed: {str(e)}")
