@@ -9,468 +9,410 @@
     <style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .tab-button.active { 
-            background: #3b82f6; 
-            color: white; 
-        }
+        .tab-button.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .login-container { display: none; }
+        .admin-content { display: none; }
+        .login-container.active, .admin-content.active { display: block; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <h1 class="text-2xl font-bold text-gray-900">CV Admin Panel</h1>
-                <div class="flex space-x-4">
-                    <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                        <i data-lucide="arrow-left" class="w-4 h-4 inline mr-2"></i>
-                        Back to CV
-                    </a>
-                    <button onclick="saveAllChanges()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" id="saveBtn">
-                        <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>
-                        Save All
-                    </button>
+    <!-- Login Form -->
+    <div id="loginContainer" class="login-container active min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full mx-4">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Admin Panel</h1>
+                    <p class="text-gray-600">Sign in to manage CV content</p>
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Tabs Navigation -->
-        <div class="mb-8">
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex space-x-8">
-                    <button onclick="showTab('personal')" class="tab-button active py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-2"></i>
-                        Personal Info
-                    </button>
-                    <button onclick="showTab('about')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="file-text" class="w-4 h-4 inline mr-2"></i>
-                        About
-                    </button>
-                    <button onclick="showTab('experience')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="briefcase" class="w-4 h-4 inline mr-2"></i>
-                        Experience
-                    </button>
-                    <button onclick="showTab('education')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="graduation-cap" class="w-4 h-4 inline mr-2"></i>
-                        Education
-                    </button>
-                    <button onclick="showTab('skills')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="code" class="w-4 h-4 inline mr-2"></i>
-                        Skills
-                    </button>
-                    <button onclick="showTab('languages')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="globe" class="w-4 h-4 inline mr-2"></i>
-                        Languages
-                    </button>
-                    <button onclick="showTab('import')" class="tab-button py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i data-lucide="database" class="w-4 h-4 inline mr-2"></i>
-                        Import/Export
-                    </button>
-                </nav>
-            </div>
-        </div>
-
-        <!-- Tab Contents -->
-        
-        <!-- Personal Info Tab -->
-        <div id="personal" class="tab-content active">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                        <input type="text" id="personal_name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
-                        <input type="text" id="personal_title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                        <input type="email" id="personal_email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                        <input type="text" id="personal_phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Website</label>
-                        <input type="url" id="personal_website" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Profile Image URL</label>
-                        <input type="url" id="personal_profileImage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Tab -->
-        <div id="about" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6">About Description</h2>
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">English</label>
-                        <textarea id="about_en" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Spanish</label>
-                        <textarea id="about_es" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">French</label>
-                        <textarea id="about_fr" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Experience Tab -->
-        <div id="experience" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-gray-900">Experience</h2>
-                    <button onclick="addExperience()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                        <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
-                        Add Experience
-                    </button>
-                </div>
-                <div id="experienceList" class="space-y-6">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Education Tab -->
-        <div id="education" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-gray-900">Education</h2>
-                    <button onclick="addEducation()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                        <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
-                        Add Education
-                    </button>
-                </div>
-                <div id="educationList" class="space-y-6">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Skills Tab -->
-        <div id="skills" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6">Skills & Technologies</h2>
-                <div id="skillsList" class="space-y-6">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Languages Tab -->
-        <div id="languages" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-gray-900">Languages</h2>
-                    <button onclick="addLanguage()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                        <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
-                        Add Language
-                    </button>
-                </div>
-                <div id="languagesList" class="space-y-6">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Import/Export Tab -->
-        <div id="import" class="tab-content">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6">Import/Export Data</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Import Section -->
-                    <div class="border border-gray-200 rounded-lg p-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Import JSON Data</h3>
-                        <div class="mb-4">
-                            <input type="file" id="importFile" accept=".json" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                        </div>
-                        <button onclick="importData()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                            <i data-lucide="upload" class="w-4 h-4 inline mr-2"></i>
-                            Import Data
-                        </button>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="mb-6">
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <input type="text" id="username" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     
-                    <!-- Export Section -->
-                    <div class="border border-gray-200 rounded-lg p-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Export JSON Data</h3>
-                        <p class="text-gray-600 mb-4">Download current CV data as JSON file.</p>
-                        <button onclick="exportData()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                            <i data-lucide="download" class="w-4 h-4 inline mr-2"></i>
-                            Export Data
+                    <div class="mb-6">
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" id="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <button type="submit" id="loginBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center">
+                        <i data-lucide="lock" class="w-4 h-4 mr-2"></i>
+                        Sign In
+                    </button>
+                </form>
+                
+                <div id="loginError" class="mt-4 text-red-600 text-sm text-center hidden"></div>
+                
+                <div class="mt-6 text-center">
+                    <a href="/" class="text-blue-600 hover:text-blue-700 text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i>
+                        Back to CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div id="adminContent" class="admin-content">
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <h1 class="text-2xl font-bold text-gray-900">CV Admin Panel</h1>
+                    <div class="flex space-x-4">
+                        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                            Back to CV
+                        </a>
+                        <button onclick="saveAllChanges()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center" id="saveBtn">
+                            <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                            Save All
+                        </button>
+                        <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                            Logout
                         </button>
                     </div>
                 </div>
+            </div>
+        </header>
 
-                <!-- Quick Actions -->
-                <div class="mt-8 border-t pt-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="/health" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-                            <i data-lucide="heart" class="w-4 h-4 inline mr-2"></i>
-                            Health Check
-                        </a>
-                        <a href="/api/content/" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                            <i data-lucide="database" class="w-4 h-4 inline mr-2"></i>
-                            View API Data
-                        </a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 overflow-x-auto">
+                        <button onclick="showTab('personal')" class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="user" class="w-4 h-4 mr-2 inline"></i>Personal
+                        </button>
+                        <button onclick="showTab('about')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="file-text" class="w-4 h-4 mr-2 inline"></i>About
+                        </button>
+                        <button onclick="showTab('experience')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="briefcase" class="w-4 h-4 mr-2 inline"></i>Experience
+                        </button>
+                        <button onclick="showTab('skills')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="code" class="w-4 h-4 mr-2 inline"></i>Skills
+                        </button>
+                        <button onclick="showTab('import')" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                            <i data-lucide="database" class="w-4 h-4 mr-2 inline"></i>Import/Export
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <div id="loading" class="text-center py-8">
+                <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto text-blue-600"></i>
+                <p class="mt-2 text-gray-600">Loading CV data...</p>
+            </div>
+
+            <!-- Personal Info Tab -->
+            <div id="personal" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="personal_name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                            <input type="text" id="personal_title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="personal_email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="text" id="personal_phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Website</label>
+                            <input type="url" id="personal_website" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Profile Image URL</label>
+                            <input type="url" id="personal_profileImage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">About Description</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">English</label>
+                            <textarea id="about_en" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Spanish</label>
+                            <textarea id="about_es" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">French</label>
+                            <textarea id="about_fr" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Tab -->
+            <div id="experience" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Experience Management</h2>
+                    <div id="experienceList" class="space-y-4">
+                        <!-- Content loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="skills" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Skills & Technologies</h2>
+                    <div id="skillsList" class="space-y-4">
+                        <!-- Content loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import/Export Tab -->
+            <div id="import" class="tab-content">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Import/Export Data</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Import JSON Data</h3>
+                            <input type="file" id="importFile" accept=".json" class="w-full px-3 py-2 border border-gray-300 rounded-md mb-4">
+                            <button onclick="importData()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                Import Data
+                            </button>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Export JSON Data</h3>
+                            <p class="text-gray-600 mb-4">Download current CV data as JSON file.</p>
+                            <button onclick="exportData()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                Export Data
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="/health" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Health Check</a>
+                        <a href="/api/content/" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">View API Data</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading/Success Messages -->
-    <div id="notifications" class="fixed top-4 right-4 z-50"></div>
+    <div id="notifications" class="fixed top-4 right-4 z-50 space-y-2"></div>
 
     <script>
         let cvData = null;
+        let authToken = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
-            loadCVData();
+            
+            // Check if user is already authenticated
+            authToken = localStorage.getItem('adminToken');
+            if (authToken) {
+                verifyToken();
+            }
         });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('loginError');
+            
+            loginBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Signing In...';
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    authToken = data.access_token;
+                    localStorage.setItem('adminToken', authToken);
+                    
+                    showAdminPanel();
+                    loadCVData();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Login failed');
+                }
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+            }
+
+            loginBtn.innerHTML = '<i data-lucide="lock" class="w-4 h-4 mr-2"></i>Sign In';
+            loginBtn.disabled = false;
+            lucide.createIcons();
+        }
+
+        async function verifyToken() {
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showAdminPanel();
+                    loadCVData();
+                } else {
+                    throw new Error('Token verification failed');
+                }
+            } catch (error) {
+                localStorage.removeItem('adminToken');
+                authToken = null;
+                showLoginForm();
+            }
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginContainer').classList.add('active');
+            document.getElementById('adminContent').classList.remove('active');
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginContainer').classList.remove('active');
+            document.getElementById('adminContent').classList.add('active');
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            authToken = null;
+            showLoginForm();
+            document.getElementById('loginForm').reset();
+        }
 
         async function loadCVData() {
             try {
-                const response = await fetch('/api/content/');
-                cvData = await response.json();
-                populateAllForms();
+                const response = await fetch('/api/content/', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (response.ok) {
+                    cvData = await response.json();
+                    populateAllForms();
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('personal').classList.add('active');
+                    document.getElementById('personal').style.display = 'block';
+                } else {
+                    throw new Error('Failed to load data');
+                }
             } catch (error) {
-                showNotification('Error loading data', 'error');
+                showNotification('Error loading data: ' + error.message, 'error');
             }
         }
 
         function showTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
+                tab.style.display = 'none';
             });
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
+            document.getElementById(tabName).style.display = 'block';
             event.target.classList.add('active');
         }
 
         function populateAllForms() {
             if (!cvData) return;
 
-            // Personal Info
-            document.getElementById('personal_name').value = cvData.personalInfo.name || '';
-            document.getElementById('personal_title').value = cvData.personalInfo.title || '';
-            document.getElementById('personal_email').value = cvData.personalInfo.email || '';
-            document.getElementById('personal_phone').value = cvData.personalInfo.phone || '';
-            document.getElementById('personal_website').value = cvData.personalInfo.website || '';
-            document.getElementById('personal_profileImage').value = cvData.personalInfo.profileImage || '';
+            document.getElementById('personal_name').value = cvData.personalInfo?.name || '';
+            document.getElementById('personal_title').value = cvData.personalInfo?.title || '';
+            document.getElementById('personal_email').value = cvData.personalInfo?.email || '';
+            document.getElementById('personal_phone').value = cvData.personalInfo?.phone || '';
+            document.getElementById('personal_website').value = cvData.personalInfo?.website || '';
+            document.getElementById('personal_profileImage').value = cvData.personalInfo?.profileImage || '';
 
-            // About
-            document.getElementById('about_en').value = cvData.aboutDescription.en || '';
-            document.getElementById('about_es').value = cvData.aboutDescription.es || '';
-            document.getElementById('about_fr').value = cvData.aboutDescription.fr || '';
+            document.getElementById('about_en').value = cvData.aboutDescription?.en || '';
+            document.getElementById('about_es').value = cvData.aboutDescription?.es || '';
+            document.getElementById('about_fr').value = cvData.aboutDescription?.fr || '';
 
-            // Experience
             populateExperiences();
-            
-            // Education
-            populateEducation();
-            
-            // Skills
             populateSkills();
-            
-            // Languages
-            populateLanguages();
         }
 
         function populateExperiences() {
             const container = document.getElementById('experienceList');
+            if (!cvData.experiences) return;
+            
             container.innerHTML = cvData.experiences.map((exp, index) => `
-                <div class="border border-gray-200 rounded-lg p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-lg font-medium">Experience ${index + 1}</h3>
-                        <button onclick="removeExperience(${index})" class="text-red-600 hover:text-red-800">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Job Title" value="${exp.title}" onchange="updateExperience(${index}, 'title', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Company" value="${exp.company}" onchange="updateExperience(${index}, 'company', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Location" value="${exp.location}" onchange="updateExperience(${index}, 'location', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Period" value="${exp.period}" onchange="updateExperience(${index}, 'period', this.value)" class="px-3 py-2 border rounded-md">
-                    </div>
-                    <div class="mt-4 space-y-3">
-                        <textarea placeholder="Description (English)" onchange="updateExperienceDescription(${index}, 'en', this.value)" class="w-full px-3 py-2 border rounded-md" rows="3">${(exp.description.en || []).join('\n')}</textarea>
-                        <textarea placeholder="Description (Spanish)" onchange="updateExperienceDescription(${index}, 'es', this.value)" class="w-full px-3 py-2 border rounded-md" rows="3">${(exp.description.es || []).join('\n')}</textarea>
-                        <textarea placeholder="Description (French)" onchange="updateExperienceDescription(${index}, 'fr', this.value)" class="w-full px-3 py-2 border rounded-md" rows="3">${(exp.description.fr || []).join('\n')}</textarea>
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="font-semibold mb-2">${exp.title} at ${exp.company}</h3>
+                    <p class="text-gray-600 text-sm">${exp.period} • ${exp.location}</p>
+                    <div class="mt-2">
+                        ${(exp.description?.en || []).map(desc => `<p class="text-sm text-gray-700">• ${desc}</p>`).join('')}
                     </div>
                 </div>
             `).join('');
-            lucide.createIcons();
-        }
-
-        function populateEducation() {
-            const container = document.getElementById('educationList');
-            container.innerHTML = cvData.education.map((edu, index) => `
-                <div class="border border-gray-200 rounded-lg p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-lg font-medium">Education ${index + 1}</h3>
-                        <button onclick="removeEducation(${index})" class="text-red-600 hover:text-red-800">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" placeholder="Title/Degree" value="${edu.title}" onchange="updateEducation(${index}, 'title', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Institution" value="${edu.institution}" onchange="updateEducation(${index}, 'institution', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Year" value="${edu.year}" onchange="updateEducation(${index}, 'year', this.value)" class="px-3 py-2 border rounded-md">
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
         }
 
         function populateSkills() {
             const container = document.getElementById('skillsList');
+            if (!cvData.skills) return;
+            
             container.innerHTML = Object.entries(cvData.skills).map(([category, skills]) => `
-                <div class="border border-gray-200 rounded-lg p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <input type="text" value="${category}" onchange="updateSkillCategory('${category}', this.value)" class="text-lg font-medium bg-transparent border-none outline-none">
-                        <button onclick="removeSkillCategory('${category}')" class="text-red-600 hover:text-red-800">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <textarea onchange="updateSkills('${category}', this.value)" class="w-full px-3 py-2 border rounded-md" rows="3" placeholder="Skills separated by commas">${skills.join(', ')}</textarea>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function populateLanguages() {
-            const container = document.getElementById('languagesList');
-            container.innerHTML = cvData.languages.map((lang, index) => `
-                <div class="border border-gray-200 rounded-lg p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-lg font-medium">Language ${index + 1}</h3>
-                        <button onclick="removeLanguage(${index})" class="text-red-600 hover:text-red-800">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" placeholder="Language" value="${lang.name}" onchange="updateLanguage(${index}, 'name', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="text" placeholder="Level" value="${lang.level}" onchange="updateLanguage(${index}, 'level', this.value)" class="px-3 py-2 border rounded-md">
-                        <input type="number" placeholder="Proficiency %" value="${lang.proficiency}" onchange="updateLanguage(${index}, 'proficiency', parseInt(this.value))" class="px-3 py-2 border rounded-md" min="0" max="100">
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="font-semibold mb-2 capitalize">${category}</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${skills.map(skill => `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">${skill}</span>`).join('')}
                     </div>
                 </div>
             `).join('');
-            lucide.createIcons();
         }
 
-        // Update functions
-        function updateExperience(index, field, value) {
-            cvData.experiences[index][field] = value;
-        }
-
-        function updateExperienceDescription(index, lang, value) {
-            cvData.experiences[index].description[lang] = value.split('\n').filter(line => line.trim());
-        }
-
-        function updateEducation(index, field, value) {
-            cvData.education[index][field] = value;
-        }
-
-        function updateLanguage(index, field, value) {
-            cvData.languages[index][field] = value;
-        }
-
-        function updateSkills(category, value) {
-            cvData.skills[category] = value.split(',').map(skill => skill.trim()).filter(skill => skill);
-        }
-
-        // Add functions
-        function addExperience() {
-            cvData.experiences.push({
-                id: Date.now().toString(),
-                title: '',
-                company: '',
-                location: '',
-                period: '',
-                description: { en: [], es: [], fr: [] }
-            });
-            populateExperiences();
-        }
-
-        function addEducation() {
-            cvData.education.push({
-                id: Date.now().toString(),
-                title: '',
-                institution: '',
-                year: '',
-                type: 'degree'
-            });
-            populateEducation();
-        }
-
-        function addLanguage() {
-            cvData.languages.push({
-                name: '',
-                level: '',
-                proficiency: 0
-            });
-            populateLanguages();
-        }
-
-        // Remove functions
-        function removeExperience(index) {
-            cvData.experiences.splice(index, 1);
-            populateExperiences();
-        }
-
-        function removeEducation(index) {
-            cvData.education.splice(index, 1);
-            populateEducation();
-        }
-
-        function removeLanguage(index) {
-            cvData.languages.splice(index, 1);
-            populateLanguages();
-        }
-
-        // Save all changes
         async function saveAllChanges() {
             const saveBtn = document.getElementById('saveBtn');
-            saveBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 inline mr-2 animate-spin"></i>Saving...';
-
-            // Update personal info
-            cvData.personalInfo.name = document.getElementById('personal_name').value;
-            cvData.personalInfo.title = document.getElementById('personal_title').value;
-            cvData.personalInfo.email = document.getElementById('personal_email').value;
-            cvData.personalInfo.phone = document.getElementById('personal_phone').value;
-            cvData.personalInfo.website = document.getElementById('personal_website').value;
-            cvData.personalInfo.profileImage = document.getElementById('personal_profileImage').value;
-
-            // Update about
-            cvData.aboutDescription.en = document.getElementById('about_en').value;
-            cvData.aboutDescription.es = document.getElementById('about_es').value;
-            cvData.aboutDescription.fr = document.getElementById('about_fr').value;
+            saveBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Saving...';
+            saveBtn.disabled = true;
 
             try {
+                cvData.personalInfo = {
+                    name: document.getElementById('personal_name').value,
+                    title: document.getElementById('personal_title').value,
+                    email: document.getElementById('personal_email').value,
+                    phone: document.getElementById('personal_phone').value,
+                    website: document.getElementById('personal_website').value,
+                    profileImage: document.getElementById('personal_profileImage').value
+                };
+
+                cvData.aboutDescription = {
+                    en: document.getElementById('about_en').value,
+                    es: document.getElementById('about_es').value,
+                    fr: document.getElementById('about_fr').value
+                };
+
                 const response = await fetch('/api/content/', {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
                     body: JSON.stringify(cvData)
                 });
 
@@ -480,14 +422,14 @@
                     throw new Error('Failed to save');
                 }
             } catch (error) {
-                showNotification('Error saving changes', 'error');
+                showNotification('Error saving changes: ' + error.message, 'error');
             }
 
-            saveBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 inline mr-2"></i>Save All';
+            saveBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 mr-2"></i>Save All';
+            saveBtn.disabled = false;
             lucide.createIcons();
         }
 
-        // Import/Export functions
         async function importData() {
             const fileInput = document.getElementById('importFile');
             if (!fileInput.files[0]) {
@@ -502,6 +444,7 @@
             try {
                 const response = await fetch('/api/import/cv-data', {
                     method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` },
                     body: formData
                 });
 
@@ -512,37 +455,42 @@
                     throw new Error('Import failed');
                 }
             } catch (error) {
-                showNotification('Error importing data', 'error');
+                showNotification('Error importing data: ' + error.message, 'error');
             }
         }
 
         async function exportData() {
             try {
-                const response = await fetch('/api/import/export');
+                const response = await fetch('/api/import/export', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (!response.ok) throw new Error('Export failed');
+                
                 const data = await response.json();
                 
                 const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'cv-data.json';
+                a.download = `cv-data-${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
                 
                 showNotification('Data exported successfully!', 'success');
             } catch (error) {
-                showNotification('Error exporting data', 'error');
+                showNotification('Error exporting data: ' + error.message, 'error');
             }
         }
 
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `p-4 rounded-lg shadow-lg mb-4 ${
+            notification.className = `p-4 rounded-lg shadow-lg mb-4 max-w-sm ${
                 type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
                 type === 'error' ? 'bg-red-100 text-red-800 border border-red-200' :
                 'bg-blue-100 text-blue-800 border border-blue-200'
             }`;
-            notification.textContent = message;
+            
+            notification.innerHTML = `<div class="flex items-center"><span>${message}</span></div>`;
             
             document.getElementById('notifications').appendChild(notification);
             
