@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none !important; }
+        .show { display: block !important; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- LOGIN -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full mx-4 bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-2xl font-bold text-center mb-6">Panel Admin</h1>
+            
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
+                    <input type="text" id="username" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                
+                <button type="submit" id="loginBtn" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Entrar
+                </button>
+            </form>
+            
+            <div id="loginError" class="mt-4 text-red-500 text-sm text-center hidden"></div>
+            
+            <div class="mt-4 text-center">
+                <a href="/" class="text-blue-500 hover:underline">← Volver al CV</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel" class="hidden">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold text-gray-900">Panel de Control</h1>
+                    <div class="space-x-4">
+                        <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Ver CV
+                        </a>
+                        <button onclick="logout()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto py-6 px-4">
+            <!-- Tabs -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button onclick="showTab('personal')" class="tab-btn border-b-2 border-blue-500 text-blue-600 py-2 px-1 text-sm font-medium">
+                            Personal
+                        </button>
+                        <button onclick="showTab('about')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium">
+                            Descripción
+                        </button>
+                        <button onclick="showTab('tools')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 py-2 px-1 text-sm font-medium">
+                            Herramientas
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Personal Tab -->
+            <div id="personal" class="tab-content">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">Información Personal</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
+                            <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Título:</label>
+                            <input type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+                            <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono:</label>
+                            <input type="text" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button onclick="savePersonal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">Descripciones</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Inglés:</label>
+                            <textarea id="about_en" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Español:</label>
+                            <textarea id="about_es" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Francés:</label>
+                            <textarea id="about_fr" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button onclick="saveAbout()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div id="tools" class="tab-content hidden">
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">Herramientas</h2>
+                    
+                    <div class="space-y-4">
+                        <button onclick="loadData()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Cargar Datos del API
+                        </button>
+                        
+                        <button onclick="testConnection()" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                            Probar Conexión API
+                        </button>
+                        
+                        <a href="/api/content/" target="_blank" class="block w-full bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded text-center">
+                            Ver Datos JSON
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Messages -->
+    <div id="messages" class="fixed bottom-4 right-4 space-y-2"></div>
+
+    <script>
+        let token = null;
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!username || !password) {
+                showError('Por favor llena todos los campos');
+                return;
+            }
+            
+            loginBtn.textContent = 'Entrando...';
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    token = data.access_token;
+                    localStorage.setItem('adminToken', token);
+                    
+                    // SIMPLE: Hide login, show panel
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    
+                    showMessage('¡Bienvenido!', 'success');
+                    
+                } else {
+                    throw new Error('Credenciales incorrectas');
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+            
+            loginBtn.textContent = 'Entrar';
+            loginBtn.disabled = false;
+        });
+
+        // Show tab
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Set active button
+            event.target.classList.remove('border-transparent', 'text-gray-500');
+            event.target.classList.add('border-blue-500', 'text-blue-600');
+        }
+
+        // Load data from API
+        async function loadData() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Fill personal info
+                    if (data.personalInfo) {
+                        document.getElementById('name').value = data.personalInfo.name || '';
+                        document.getElementById('title').value = data.personalInfo.title || '';
+                        document.getElementById('email').value = data.personalInfo.email || '';
+                        document.getElementById('phone').value = data.personalInfo.phone || '';
+                    }
+                    
+                    // Fill about
+                    if (data.aboutDescription) {
+                        document.getElementById('about_en').value = data.aboutDescription.en || '';
+                        document.getElementById('about_es').value = data.aboutDescription.es || '';
+                        document.getElementById('about_fr').value = data.aboutDescription.fr || '';
+                    }
+                    
+                    showMessage('Datos cargados correctamente', 'success');
+                } else {
+                    throw new Error(`Error ${response.status}`);
+                }
+            } catch (error) {
+                showError('Error cargando datos: ' + error.message);
+            }
+        }
+
+        // Test API connection
+        async function testConnection() {
+            try {
+                const response = await fetch('/api/content/');
+                if (response.ok) {
+                    showMessage('✅ API funcionando correctamente', 'success');
+                } else {
+                    showMessage(`❌ Error API: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Save personal info
+        async function savePersonal() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            const personalData = {
+                personalInfo: {
+                    name: document.getElementById('name').value,
+                    title: document.getElementById('title').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(personalData)
+                });
+                
+                if (response.ok) {
+                    showMessage('Información personal guardada', 'success');
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showError('Error guardando: ' + error.message);
+            }
+        }
+
+        // Save about info
+        async function saveAbout() {
+            if (!token) {
+                showError('No hay token de autenticación');
+                return;
+            }
+            
+            const aboutData = {
+                aboutDescription: {
+                    en: document.getElementById('about_en').value,
+                    es: document.getElementById('about_es').value,
+                    fr: document.getElementById('about_fr').value
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/content/', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(aboutData)
+                });
+                
+                if (response.ok) {
+                    showMessage('Descripciones guardadas', 'success');
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                showError('Error guardando: ' + error.message);
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('adminToken');
+            token = null;
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+            showMessage('Sesión cerrada', 'info');
+        }
+
+        // Show message
+        function showMessage(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `px-4 py-2 rounded-lg text-white ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            div.textContent = message;
+            
+            document.getElementById('messages').appendChild(div);
+            
+            setTimeout(() => {
+                div.remove();
+            }, 3000);
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        // Check for existing token on load
+        window.addEventListener('load', function() {
+            const savedToken = localStorage.getItem('adminToken');
+            if (savedToken) {
+                token = savedToken;
+                // Don't auto-login, just save the token
+            }
+        });
+    </script>
+</body>
+</html>
