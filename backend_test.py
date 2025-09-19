@@ -13,7 +13,7 @@ import tempfile
 import time
 
 # Configuration
-BACKEND_URL = "https://smart-cv-portal.preview.emergentagent.com"
+BACKEND_URL = "http://localhost:8001"  # Use internal URL since external routing has issues
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin2024"
 
